@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Anecdote = ({ anecdote, votes, text }) => {
+const Anecdote = ({ anecdote, votes, header }) => {
   return (
     <div>
-      <h1>{text}</h1>
+      <h1>{header}</h1>
       <p>{anecdote}</p>
       <p>has {votes} votes</p>
     </div>
@@ -18,48 +18,39 @@ const Button = ({ onClick, text }) => {
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
   const [votesArray, setVotesArray] = useState(new Array(anecdotes.length).fill(0));
+  const [mostVotesIndex, setMostVotesIndex] = useState(0);
 
 
   const addVote = () => {
     const newVotesArray = [...votesArray];
     newVotesArray[selected]++;
     setVotesArray(newVotesArray);
+    if (votesArray[selected] >= votesArray[mostVotesIndex]) {
+      setMostVotesIndex(selected);
+    }
   }
 
-  const getRandomIndex = () => {
-    const index = Math.floor((Math.random() * anecdotes.length)); // random index from anecdotes
-    setSelected(index);
+  const randomAnecdote = () => {
+    const randomIndex = Math.floor((Math.random() * anecdotes.length)); // random index from anecdotes
+    while (randomIndex == selected) {
+      Math.floor((Math.random() * anecdotes.length));
+    }
+    setSelected(randomIndex);
   }
-
-  const getMostVotesIndex = () => {
-    let mostVotes = 0;
-    let mostVotesIndex = 0;
-
-    votesArray.forEach((votes, index) => {
-      if (votes > mostVotes) {
-        mostVotes = votes;
-        mostVotesIndex = index;
-      }
-    });
-
-    return mostVotesIndex;
-  }
-
-  const mostVotesIndex = getMostVotesIndex();
 
   return (
     <div>
       <Anecdote
         anecdote={anecdotes[selected]}
         votes={votesArray[selected]}
-        text="Anecdote of the Day"
+        header="Anecdote of the Day"
       />
       <Button onClick={addVote} text="vote"/>
-      <Button onClick={getRandomIndex} text="next anecdote"/>
+      <Button onClick={randomAnecdote} text="next anecdote"/>
       <Anecdote
         anecdote={anecdotes[mostVotesIndex]}
         votes={votesArray[mostVotesIndex]}
-        text="Anecdote with most votes"
+        header="Anecdote with most votes"
       />
     </div>
   );
