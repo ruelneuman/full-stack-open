@@ -31,9 +31,9 @@ const App = ({ anecdotes }) => {
   }
 
   const randomAnecdote = () => {
-    const randomIndex = Math.floor((Math.random() * anecdotes.length)); // random index from anecdotes
+    let randomIndex = Math.floor((Math.random() * anecdotes.length)); // random index from anecdotes
     while (randomIndex == selected) {
-      Math.floor((Math.random() * anecdotes.length));
+      randomIndex = Math.floor((Math.random() * anecdotes.length));
     }
     setSelected(randomIndex);
   }
