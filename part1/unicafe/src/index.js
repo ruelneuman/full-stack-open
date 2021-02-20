@@ -6,13 +6,15 @@ const Button = ({ onClick, text }) => {
     <button onClick={onClick}>
       {text}
     </button>
-  )
+  );
 }
 
 const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad;
   const average = (good - bad) / (all || 1);
   const positivePercent = 100 * good / (all || 1);
+  
+  if (all === 0) return <p>No feedback given</p>;
 
   return (
     <div>
@@ -23,7 +25,7 @@ const Statistics = ({ good, neutral, bad }) => {
       <p>average: {average}</p>
       <p>positive: {positivePercent} %</p>
     </div>
-  )
+  );
 }
 
 const App = () => {
@@ -53,7 +55,7 @@ const App = () => {
       <h1>statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
-  )
+  );
 }
 
 ReactDOM.render(<App />,
