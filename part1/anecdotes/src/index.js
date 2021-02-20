@@ -1,29 +1,68 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Anecdote = ({ anecdote, votes, text }) => {
+  return (
+    <div>
+      <h1>{text}</h1>
+      <p>{anecdote}</p>
+      <p>has {votes} votes</p>
+    </div>
+  );
+}
+
+const Button = ({ onClick, text }) => {
+  return <button onClick={onClick}>{text}</button>
+}
+
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
-  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
-  
+  const [votesArray, setVotesArray] = useState(new Array(anecdotes.length).fill(0));
+
+
   const addVote = () => {
-    const newVotes = [...votes];
-    newVotes[selected]++;
-    setVotes(newVotes);
+    const newVotesArray = [...votesArray];
+    newVotesArray[selected]++;
+    setVotesArray(newVotesArray);
   }
 
-  const randomIndex = () => {
+  const getRandomIndex = () => {
     const index = Math.floor((Math.random() * anecdotes.length)); // random index from anecdotes
     setSelected(index);
   }
 
+  const getMostVotesIndex = () => {
+    let mostVotes = 0;
+    let mostVotesIndex = 0;
+
+    votesArray.forEach((votes, index) => {
+      if (votes > mostVotes) {
+        mostVotes = votes;
+        mostVotesIndex = index;
+      }
+    });
+
+    return mostVotesIndex;
+  }
+
+  const mostVotesIndex = getMostVotesIndex();
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
-      <button onClick={addVote}>vote</button>
-      <button onClick={randomIndex}>next anecdote</button>
+      <Anecdote
+        anecdote={anecdotes[selected]}
+        votes={votesArray[selected]}
+        text="Anecdote of the Day"
+      />
+      <Button onClick={addVote} text="vote"/>
+      <Button onClick={getRandomIndex} text="next anecdote"/>
+      <Anecdote
+        anecdote={anecdotes[mostVotesIndex]}
+        votes={votesArray[mostVotesIndex]}
+        text="Anecdote with most votes"
+      />
     </div>
-  )
+  );
 }
 
 const anecdotes = [
