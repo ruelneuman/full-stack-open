@@ -8,7 +8,8 @@ const PersonList = ({ persons, query }) => {
     return (
         <div>
             <h2>Numbers</h2>
-            {persons.filter(byQuery(query))
+            {persons
+                .filter(byQuery(query))
                 .map(person =>
                     <Person person={person} />
                 )}
