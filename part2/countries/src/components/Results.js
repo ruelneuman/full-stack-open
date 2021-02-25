@@ -1,7 +1,7 @@
 import React from 'react';
 import Country from './Country';
 
-const Results = ({ countries, query }) => {
+const Results = ({ countries, query, setQuery }) => {
     const byQuery = query => country =>
         !query || (new RegExp(query.trim(), 'i')).test(country.name);
 
@@ -18,7 +18,14 @@ const Results = ({ countries, query }) => {
     if (filteredCountries.length <= 10) {
         return (
             <div>
-                {filteredCountries.map(country => <div key={country.alpha3Code}>{country.name}</div>)}
+                {filteredCountries.map(country => {
+                    return (
+                        <div key={country.alpha3Code}>
+                            {country.name}
+                            <button type="button" onClick={() => setQuery(country.name)}>show</button>
+                        </div>
+                    )
+                })}
             </div>
         );
     }

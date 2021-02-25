@@ -29,6 +29,7 @@ const App = () => {
       <Results
         countries={countries}
         query={query}
+        setQuery={setQuery}
       />
     </div>
   );
