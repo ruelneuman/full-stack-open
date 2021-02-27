@@ -2,10 +2,20 @@ import React from 'react';
 import Country from './Country';
 
 const Results = ({ countries, query, setQuery }) => {
-    const byQuery = query => country =>
-        !query || (new RegExp(query.trim(), 'i')).test(country.name);
+    const byQuery = (query) => (country) => {
+        const modifiedQuery = query.toLowerCase().trim();
+        return country.name.toLowerCase().includes(modifiedQuery);
+    }
 
-    const filteredCountries = countries.filter(byQuery(query));
+    // filter countries by query
+    let filteredCountries = countries.filter(byQuery(query));
+    
+    // if there is an exact match filteredCountries will list the exact match only
+    filteredCountries.forEach((country) => {
+        if (query.toLowerCase().trim() === country.name.toLowerCase()) {
+            filteredCountries = [country];
+        }
+    });
 
     if (filteredCountries.length <= 0) {
         return <div>No matches. Try another filter.</div>;
