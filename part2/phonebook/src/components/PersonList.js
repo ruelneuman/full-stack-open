@@ -2,8 +2,10 @@ import React from 'react';
 import Person from './Person'
 
 const PersonList = ({ persons, query }) => {
-    const byQuery = query => person =>
-        !query || (new RegExp(query.trim(), 'i')).test(person.name);
+    const byQuery = (query) => (person) => {
+        const modifiedQuery = query.toLowerCase().trim();
+        return person.name.toLowerCase().includes(modifiedQuery);
+    }
 
     return (
         <div>
@@ -11,7 +13,10 @@ const PersonList = ({ persons, query }) => {
             {persons
                 .filter(byQuery(query))
                 .map(person =>
-                    <Person person={person} />
+                    <Person
+                        key={person.id}
+                        person={person}
+                    />
                 )}
         </div>
     )

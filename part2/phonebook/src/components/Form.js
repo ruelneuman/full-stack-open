@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const Form = ({ persons, setPersons }) => {
@@ -13,9 +14,14 @@ const Form = ({ persons, setPersons }) => {
         }
 
         const newPerson = { name: newName, number: newNumber };
-        setPersons(persons.concat(newPerson));
-        setNewName('');
-        setNewNumber('');
+
+        axios
+            .post('http://localhost:3001/persons', newPerson)
+            .then(response => {
+                setPersons(persons.concat(response.data));
+                setNewName('');
+                setNewNumber('');
+            });
     }
 
     const handleNameChange = (event) => {
@@ -32,14 +38,14 @@ const Form = ({ persons, setPersons }) => {
             <form onSubmit={handleSubmit}>
                 <div>
                     name:
-        <input
+                    <input
                         value={newName}
                         onChange={handleNameChange}
                     />
                 </div>
                 <div>
                     number:
-        <input
+                    <input
                         value={newNumber}
                         onChange={handleNumberChange}
                     />
