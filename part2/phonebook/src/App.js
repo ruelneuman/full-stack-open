@@ -33,6 +33,7 @@ const App = () => {
             />
             <PersonList
                 persons={persons}
+                setPersons={setPersons}
                 query={query}
             />
         </div>

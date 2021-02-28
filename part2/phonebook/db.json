@@ -19,21 +19,6 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "Bob Smith",
-      "number": "555-555-5555",
-      "id": 5
-    },
-    {
-      "name": "Sam Smith",
-      "number": "555-555-5555",
-      "id": 6
-    },
-    {
-      "name": "Bob Barker",
-      "number": "123-456-7890",
-      "id": 7
     }
   ]
 }
