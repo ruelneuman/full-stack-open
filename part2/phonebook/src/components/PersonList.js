@@ -17,6 +17,20 @@ const PersonList = ({ persons, setPersons, query }) => {
             .then(() => {
                 setPersons(persons.filter(person => person.id !== personToDelete.id));
             })
+            .catch((error) => {
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        console.warn(`The person, ${personToDelete.name}, was already deleted from the server.`)
+                        setPersons(persons.filter(person => person.id !== personToDelete.id));
+                    }
+                    console.error(error.response);
+                } else if (error.request) {
+                    console.error(error.request);
+                } else {
+                    console.error('Error', error.message);
+                }
+                console.error(error.config);
+            });
     }
 
     return (

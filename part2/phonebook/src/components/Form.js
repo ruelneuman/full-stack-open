@@ -5,23 +5,62 @@ const Form = ({ persons, setPersons }) => {
     const [newName, setNewName] = useState('');
     const [newNumber, setNewNumber] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    // update existing person that has corresponding id with data from newPerson
+    const updateExistingPerson = (id, newPerson) => {
+        const message = `${newPerson.name} is already added to the phonebook.\nOverwrite the old number with a new one?`;
 
-        if (persons.some((person) => person.name === newName)) {
-            alert(`${newName} is already added to the phonebook`);
-            return;
-        }
+        // exit handleSubmit if user doesn't want to overwrite number
+        if (!window.confirm(message)) return;
 
-        const newPerson = { name: newName, number: newNumber };
+        personsService
+            .update(id, newPerson)
+            .then((returnedPerson) => {
+                setPersons(persons.map((person) => person.id !== id ? person : returnedPerson));
+            })
+            .catch((error) => {
+                if (error.response) {
+                    console.error(error.response);
+                } else if (error.request) {
+                    console.error(error.request);
+                } else {
+                    console.error('Error', error.message);
+                }
+                console.error(error.config);
+            });
+    }
 
+    const addPerson = (newPerson) => {
         personsService
             .create(newPerson)
             .then(returnedPerson => {
                 setPersons(persons.concat(returnedPerson));
                 setNewName('');
                 setNewNumber('');
+            })
+            .catch((error) => {
+                if (error.response) {
+                    console.error(error.response);
+                } else if (error.request) {
+                    console.error(error.request);
+                } else {
+                    console.error('Error', error.message);
+                }
+                console.error(error.config);
             });
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const newPerson = { name: newName, number: newNumber };
+
+        if (persons.some((person) => person.name === newName)) {
+            const personToUpdate = persons.find((person) => person.name === newPerson.name);
+            const id = personToUpdate.id;
+            updateExistingPerson(id, newPerson);
+        } else {
+            addPerson(newPerson);
+        }
     }
 
     const handleNameChange = (event) => {
