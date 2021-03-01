@@ -8,8 +8,7 @@ import personsService from './services/persons';
 const App = () => {
     const [persons, setPersons] = useState([]);
     const [query, setQuery] = useState('');
-    const [message, setMessage] = useState(null);
-    const [isSuccess, setIsSuccess] = useState(true);
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         personsService
@@ -19,11 +18,10 @@ const App = () => {
             })
     }, []);
 
-    const displayNotification = (message, isSuccess) => {
-        setMessage(message);
-        setIsSuccess(isSuccess)
+    const displayNotification = (message, type = 'success') => {
+        setNotification({ message, type });
         setTimeout(() => {
-            setMessage(null);
+            setNotification(null);
         }, 3000);
     }
 
@@ -39,14 +37,14 @@ const App = () => {
             .remove(personToDelete)
             .then(() => {
                 setPersons(persons.filter(person => person.id !== personToDelete.id));
-                displayNotification(`Removed ${personToDelete.name}`, true);
+                displayNotification(`Removed ${personToDelete.name}`, 'success');
             })
             .catch((error) => {
                 if (error.response) {
                     if (error.response.status === 404) {
                         setPersons(persons.filter(person => person.id !== personToDelete.id));
                         console.warn(`${personToDelete.name} was already removed from the server`)
-                        displayNotification(`${personToDelete.name} was already removed from the server`, false);
+                        displayNotification(`${personToDelete.name} was already removed from the server`, 'failure');
                     }
                     console.error(error.response);
                 } else if (error.request) {
@@ -58,13 +56,17 @@ const App = () => {
             });
     }
 
+    const byQuery = (query) => (person) => {
+        const modifiedQuery = query.toLowerCase().trim();
+        return person.name.toLowerCase().includes(modifiedQuery);
+    }
+
+    const filteredPersons = persons.filter(byQuery(query));
+
     return (
         <div>
             <h1>Phonebook</h1>
-            <Notification
-                message={message}
-                isSuccess={isSuccess}
-            />
+            <Notification notification={notification} />
             <Search
                 query={query}
                 handleQuery={handleQuery}
@@ -75,8 +77,7 @@ const App = () => {
                 displayNotification={displayNotification}
             />
             <PersonList
-                persons={persons}
-                query={query}
+                filteredPersons={filteredPersons}
                 handleDelete={handleDelete}
             />
         </div>

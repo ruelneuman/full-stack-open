@@ -1,15 +1,15 @@
 import React from 'react';
 import '../index.css';
 
-const Notification = ({ message, isSuccess }) => {
-    if (message === null) {
+const Notification = ({ notification }) => {
+    if (notification === null) {
         return null
     }
 
-    const className = `notification ${isSuccess ? 'notification__success' : 'notification__failure'}`
+    const className = `notification notification__${notification.type}`
 
     return (
-        <div className={className}>{message}</div>
+        <div className={className}>{notification.message}</div>
     );
 }
 
