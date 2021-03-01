@@ -2,7 +2,7 @@ import React from 'react';
 import Person from './Person'
 import personsService from '../services/persons';
 
-const PersonList = ({ persons, setPersons, query }) => {
+const PersonList = ({ persons, query, setPersons, displayNotification }) => {
     const byQuery = (query) => (person) => {
         const modifiedQuery = query.toLowerCase().trim();
         return person.name.toLowerCase().includes(modifiedQuery);
@@ -16,6 +16,7 @@ const PersonList = ({ persons, setPersons, query }) => {
             .remove(personToDelete)
             .then(() => {
                 setPersons(persons.filter(person => person.id !== personToDelete.id));
+                displayNotification(`Removed ${personToDelete.name}`);
             })
             .catch((error) => {
                 if (error.response) {
