@@ -16,7 +16,9 @@ const Form = ({ persons, setPersons, displayNotification }) => {
             .update(id, newPerson)
             .then((returnedPerson) => {
                 setPersons(persons.map((person) => person.id !== id ? person : returnedPerson));
-                displayNotification(`Changed ${returnedPerson.name}'s number to ${returnedPerson.number}`);
+                setNewName('');
+                setNewNumber('');
+                displayNotification(`Changed ${returnedPerson.name}'s number to ${returnedPerson.number}`, true);
             })
             .catch((error) => {
                 if (error.response) {
@@ -37,7 +39,7 @@ const Form = ({ persons, setPersons, displayNotification }) => {
                 setPersons(persons.concat(returnedPerson));
                 setNewName('');
                 setNewNumber('');
-                displayNotification(`Added ${returnedPerson.name}`);
+                displayNotification(`Added ${returnedPerson.name}`, true);
             })
             .catch((error) => {
                 if (error.response) {
