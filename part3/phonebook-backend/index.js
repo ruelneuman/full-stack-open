@@ -65,9 +65,31 @@ const randomInt = (min, max) => {
 }
 
 app.post('/api/persons/', (request, response) => {
-    const person = request.body;
+    const body = request.body;
 
-    person.id = randomInt(999999999, 1);
+    if (!body.name) {
+        return response.status(400).json({
+            error: 'name is required'
+        });
+    }
+
+    if (!body.number) {
+        return response.status(400).json({
+            error: 'number is required'
+        });
+    }
+
+    if (persons.some((person) => person.name === body.name)) {
+        return response.status(400).json({
+            error: 'name must be unique'
+        });
+    }
+
+    const person = {
+        name: body.name,
+        number: body.number,
+        id: randomInt(999999999, 1),
+    }
 
     persons = persons.concat(person);
 
