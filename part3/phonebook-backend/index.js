@@ -1,8 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 morgan.token('body', (request, response, next) => {
     return JSON.stringify(request.body);
@@ -61,7 +63,7 @@ app.delete('/api/persons/:id', (request, response) => {
     if (!persons.some((person) => person.id === id)) {
         return response.status(404).end();
     } else {
-        persons = persons.filter((person) => person.id != id);
+        persons = persons.filter((person) => person.id !== id);
 
         response.status(204).end();
     }
