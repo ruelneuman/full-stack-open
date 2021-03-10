@@ -46,9 +46,11 @@ app.get('/info', (request, response) => {
 });
 
 app.get('/api/persons', (request, response) => {
-    Person.find({}).then((persons) => {
-        response.json(persons);
-    })
+    Person
+        .find({})
+        .then((persons) => {
+            response.json(persons);
+        });
 });
 
 // does not function yet with db
@@ -76,41 +78,19 @@ app.delete('/api/persons/:id', (request, response) => {
     }
 });
 
-const randomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-// does not function yet with db
 app.post('/api/persons/', (request, response) => {
     const body = request.body;
 
-    if (!body.name) {
-        return response.status(400).json({
-            error: 'name is required'
-        });
-    }
-
-    if (!body.number) {
-        return response.status(400).json({
-            error: 'number is required'
-        });
-    }
-
-    if (persons.some((person) => person.name === body.name)) {
-        return response.status(400).json({
-            error: 'name must be unique'
-        });
-    }
-
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
-        id: randomInt(999999999, 1),
-    }
+    });
 
-    persons = persons.concat(person);
-
-    response.json(person);
+    person
+        .save()
+        .then((savedPerson) => {
+            response.json(savedPerson);
+        });
 });
 
 const PORT = process.env.PORT;
