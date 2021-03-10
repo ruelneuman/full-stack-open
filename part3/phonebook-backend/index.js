@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const Person = require('./models/person');
 const app = express();
 
 app.use(express.json());
@@ -44,9 +46,12 @@ app.get('/info', (request, response) => {
 });
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons);
+    Person.find({}).then((persons) => {
+        response.json(persons);
+    })
 });
 
+// does not function yet with db
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
     const person = persons.find((person) => person.id === id);
@@ -58,6 +63,7 @@ app.get('/api/persons/:id', (request, response) => {
     }
 });
 
+// does not function yet with db
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
 
@@ -74,6 +80,7 @@ const randomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+// does not function yet with db
 app.post('/api/persons/', (request, response) => {
     const body = request.body;
 
@@ -106,7 +113,7 @@ app.post('/api/persons/', (request, response) => {
     response.json(person);
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
