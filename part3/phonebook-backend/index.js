@@ -15,12 +15,16 @@ morgan.token('body', (request, response, next) => {
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
-// does not function yet with db
-app.get('/info', (request, response) => {
-    response.send(
-        `<div>The phonebook has info for ${persons.length} people.</div>
-         <div>${new Date()}</div>`
-    );
+app.get('/info', (request, response, next) => {
+    Person
+        .countDocuments()
+        .then((count) => {
+            response.send(
+                `<div>The phonebook has info for ${count} people.</div>
+                 <div>${new Date()}</div>`
+            );
+        })
+        .catch((error) => next(error));
 });
 
 app.get('/api/persons', (request, response, next) => {
@@ -32,16 +36,17 @@ app.get('/api/persons', (request, response, next) => {
         .catch((error) => next(error));
 });
 
-// does not function yet with db
-app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id);
-    const person = persons.find((person) => person.id === id);
+app.get('/api/persons/:id', (request, response, next) => {
+    Person
+        .findById(request.params.id)
+        .then((result) => {
+            if (result === null) {
+                response.status(404).end();
+            }
 
-    if (person) {
-        response.json(person);
-    } else {
-        response.status(404).end();
-    }
+            response.json(result);
+        })
+        .catch((error) => next(error));
 });
 
 app.delete('/api/persons/:id', (request, response, next) => {
