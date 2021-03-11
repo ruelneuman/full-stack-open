@@ -15,6 +15,7 @@ morgan.token('body', (request, response, next) => {
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
+// does not function yet with db
 app.get('/info', (request, response) => {
     response.send(
         `<div>The phonebook has info for ${persons.length} people.</div>
@@ -22,12 +23,13 @@ app.get('/info', (request, response) => {
     );
 });
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
     Person
         .find({})
         .then((persons) => {
             response.json(persons);
-        });
+        })
+        .catch((error) => next(error));
 });
 
 // does not function yet with db
@@ -51,10 +53,10 @@ app.delete('/api/persons/:id', (request, response, next) => {
             }
             response.status(204).end();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => next(error));
 });
 
-app.post('/api/persons/', (request, response) => {
+app.post('/api/persons/', (request, response, next) => {
     const body = request.body;
 
     const person = new Person({
@@ -66,8 +68,27 @@ app.post('/api/persons/', (request, response) => {
         .save()
         .then((savedPerson) => {
             response.json(savedPerson);
-        });
+        })
+        .catch((error) => next(error));
 });
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' });
+};
+
+app.use(unknownEndpoint);
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message);
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+
+    next(error);
+};
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
