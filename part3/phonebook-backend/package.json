@@ -11,11 +11,13 @@
     "build:ui": "rm -rf build && cd ../../part2/phonebook && npm run build --prod && cp -r build ../../part3/phonebook-backend/",
     "deploy": "cd ../.. && git subtree push --prefix part3/phonebook-backend heroku master && cd part3/phonebook-backend/",
     "deploy:full": "npm run build:ui && cd ../.. && git add . && git commit -m uibuild && cd part3/phonebook-backend/ && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "author": "Ruel Neuman",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^7.22.0",
     "nodemon": "^2.0.7"
   },
   "dependencies": {
