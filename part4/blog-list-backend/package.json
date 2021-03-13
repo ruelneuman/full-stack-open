@@ -1,0 +1,24 @@
+{
+  "name": "blog-list-backend",
+  "version": "1.0.0",
+  "description": "Blog list backend for Full Stack Open course",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . && echo 'Lint complete'"
+  },
+  "author": "Ruel Neuman",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.0"
+  }
+}
