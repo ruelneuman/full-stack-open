@@ -23,6 +23,7 @@ const Form = ({ persons, setPersons, displayNotification }) => {
             .catch((error) => {
                 if (error.response) {
                     console.error(error.response);
+                    displayNotification(error.response.data.error, 'failure');
                 } else if (error.request) {
                     console.error(error.request);
                 } else {
@@ -44,6 +45,7 @@ const Form = ({ persons, setPersons, displayNotification }) => {
             .catch((error) => {
                 if (error.response) {
                     console.error(error.response);
+                    displayNotification(error.response.data.error, 'failure');
                 } else if (error.request) {
                     console.error(error.request);
                 } else {
