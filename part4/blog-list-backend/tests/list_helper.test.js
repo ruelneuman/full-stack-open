@@ -86,7 +86,7 @@ describe('total likes', () => {
   });
 });
 
-describe.only('favorite blog', () => {
+describe('favorite blog', () => {
   test('of an empty list is null', () => {
     const result = listHelper.favoriteBlog([]);
     expect(result).toBeNull();
@@ -107,6 +107,29 @@ describe.only('favorite blog', () => {
       title: 'Canonical string reduction',
       author: 'Edsger W. Dijkstra',
       likes: 12,
+    });
+  });
+});
+
+describe('Author with the greatest amount of blogs', () => {
+  test('when the list is empty is null', () => {
+    const result = listHelper.mostBlogs([]);
+    expect(result).toBeNull();
+  });
+
+  test('when the list has one blog is that author and a count  of 1', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog);
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      blogs: 1,
+    });
+  });
+
+  test('when the list contains multiple blogs is the author with the most blogs and a count of their blogs', () => {
+    const result = listHelper.mostBlogs(listWithMultipleBlogs);
+    expect(result).toEqual({
+      author: 'Robert C. Martin',
+      blogs: 3,
     });
   });
 });
