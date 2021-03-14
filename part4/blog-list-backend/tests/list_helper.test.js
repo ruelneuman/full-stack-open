@@ -117,7 +117,7 @@ describe('Author with the greatest amount of blogs', () => {
     expect(result).toBeNull();
   });
 
-  test('when the list has one blog is that author and a count  of 1', () => {
+  test('when the list has one blog is that author and a count of 1', () => {
     const result = listHelper.mostBlogs(listWithOneBlog);
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',
@@ -130,6 +130,29 @@ describe('Author with the greatest amount of blogs', () => {
     expect(result).toEqual({
       author: 'Robert C. Martin',
       blogs: 3,
+    });
+  });
+});
+
+describe('Author with the greatest amount of likes', () => {
+  test('when the list is empty is null', () => {
+    const result = listHelper.mostLikes([]);
+    expect(result).toBeNull();
+  });
+
+  test('when the list has one blog is that author and a count of likes', () => {
+    const result = listHelper.mostLikes(listWithOneBlog);
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 5,
+    });
+  });
+
+  test('when the list contains multiple blogs is the author with the most blogs and a count of their blogs', () => {
+    const result = listHelper.mostLikes(listWithMultipleBlogs);
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 17,
     });
   });
 });
