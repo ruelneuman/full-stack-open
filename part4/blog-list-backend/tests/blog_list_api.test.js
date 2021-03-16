@@ -27,6 +27,13 @@ describe('when there are initially some blogs saved', () => {
 
     expect(response.body).toHaveLength(helper.initialBlogs.length);
   });
+
+  test('blogs have the id property and not the _id property', async () => {
+    const response = await api.get('/api/blogs');
+
+    expect(response.body[0].id).toBeDefined();
+    expect(response.body[0]._id).toBeUndefined();
+  });
 });
 
 afterAll(() => {
