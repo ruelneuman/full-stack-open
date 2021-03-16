@@ -36,6 +36,26 @@ describe('when there are initially some blogs saved', () => {
   });
 });
 
+describe('addition of a new note', () => {
+  test('succeeds with valid data', async () => {
+    const newBlog = {
+      title: 'My Blog Post',
+      author: 'John Doe',
+      url: 'http://example.com/example/2021/03/15/example.html',
+      likes: 0,
+    };
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+
+    const blogsAfterPost = await helper.blogsInDb();
+    expect(blogsAfterPost).toHaveLength(helper.initialBlogs.length + 1);
+  });
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });

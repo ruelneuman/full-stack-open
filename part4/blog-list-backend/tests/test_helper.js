@@ -55,7 +55,7 @@ const nonExistingId = async () => {
   const blog = new Blog({
     title: 'Will Remove This Soon',
     author: 'Will Remove',
-    url: 'http://willremovethissoon.com/will-remove/2021/03/15/will-remove.html',
+    url: 'http://example.com/will-remove/2021/03/15/will-remove.html',
     likes: 0,
   });
 
