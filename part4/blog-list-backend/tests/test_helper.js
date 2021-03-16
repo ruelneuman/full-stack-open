@@ -51,6 +51,19 @@ const initialBlogs = [
   }
 ];
 
+const validBlog = {
+  title: 'My Blog Post',
+  author: 'John Doe',
+  url: 'http://example.com/example/2021/03/15/example.html',
+  likes: 12
+};
+
+const blogWithMissingLikes = {
+  title: 'My Blog Post',
+  author: 'John Doe',
+  url: 'http://example.com/example/2021/03/15/example.html'
+};
+
 const nonExistingId = async () => {
   const blog = new Blog({
     title: 'Will Remove This Soon',
@@ -72,6 +85,8 @@ const blogsInDb = async () => {
 
 module.exports = {
   initialBlogs,
+  validBlog,
+  blogWithMissingLikes,
   nonExistingId,
   blogsInDb,
 };
