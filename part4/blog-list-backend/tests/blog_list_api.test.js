@@ -14,7 +14,7 @@ beforeEach(async () => {
   await Promise.all(blogPromises);
 });
 
-describe('when there are initially some blogs saved', () => {
+describe('When there are initially some blogs saved', () => {
   test('blogs are returned as json', async () => {
     await api
       .get('/api/blogs')
@@ -36,7 +36,7 @@ describe('when there are initially some blogs saved', () => {
   });
 });
 
-describe('addition of a new note', () => {
+describe('Addition of a new note', () => {
   test('succeeds with valid data', async () => {
     await api
       .post('/api/blogs')
@@ -54,6 +54,18 @@ describe('addition of a new note', () => {
       .send(helper.blogWithMissingLikes);
 
     expect(response.body.likes).toBe(0);
+  });
+
+  test('fails with status code 400 if the title or url properties are missing', async () => {
+    await api
+      .post('/api/blogs')
+      .send(helper.blogWithMissingTitle)
+      .expect(400);
+
+    await api
+      .post('/api/blogs')
+      .send(helper.blogWithMissingUrl)
+      .expect(400);
   });
 });
 
