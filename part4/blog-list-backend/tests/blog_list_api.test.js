@@ -8,10 +8,7 @@ const api = supertest(app);
 
 beforeEach(async () => {
   await Blog.deleteMany({});
-
-  const blogObject = helper.initialBlogs.map((blog) => new Blog(blog));
-  const blogPromises = blogObject.map((blog) => blog.save());
-  await Promise.all(blogPromises);
+  await Blog.insertMany(helper.initialBlogs);
 });
 
 describe('When there are initially some blogs saved', () => {
@@ -36,9 +33,9 @@ describe('When there are initially some blogs saved', () => {
   });
 });
 
-describe('Addition of a new note', () => {
+describe('Addition of a new blog', () => {
   test('succeeds with valid data', async () => {
-    await api
+    const response = await api
       .post('/api/blogs')
       .send(helper.validBlog)
       .expect(200)
@@ -46,6 +43,7 @@ describe('Addition of a new note', () => {
 
     const blogsAfterPost = await helper.blogsInDb();
     expect(blogsAfterPost).toHaveLength(helper.initialBlogs.length + 1);
+    expect(blogsAfterPost).toContainEqual(response.body);
   });
 
   test('defaults likes to 0', async () => {
@@ -66,6 +64,29 @@ describe('Addition of a new note', () => {
       .post('/api/blogs')
       .send(helper.blogWithMissingUrl)
       .expect(400);
+  });
+});
+
+describe('Deletion of a blog', () => {
+  test('succeeds with a valid id', async () => {
+    const initialBlogs = await helper.blogsInDb();
+    const blogToDelete = initialBlogs[0];
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204);
+
+    const blogsAfterDelete = await helper.blogsInDb();
+    expect(blogsAfterDelete).toHaveLength(helper.initialBlogs.length - 1);
+    expect(blogsAfterDelete).not.toContainEqual(blogToDelete);
+  });
+
+  test('fails with status code 404 if the blog does not exist', async () => {
+    const id = await helper.nonExistingId();
+
+    await api
+      .delete(`/api/blogs/${id}`)
+      .expect(404);
   });
 });
 
