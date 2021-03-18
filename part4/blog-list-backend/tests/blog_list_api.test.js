@@ -88,6 +88,49 @@ describe('Deletion of a blog', () => {
       .delete(`/api/blogs/${id}`)
       .expect(404);
   });
+
+  test.only('fails with status code 400 if the id is invalid', async () => {
+    const invalidId = 'xxxxxxxxxxxxxx';
+
+    await api
+      .delete(`/api/blogs/${invalidId}`)
+      .expect(400);
+  });
+});
+
+describe('Update of a blog', () => {
+  test('succeeds with a valid id', async () => {
+    const initialBlogs = await helper.blogsInDb();
+    const blogtoUpdate = initialBlogs[0];
+
+    const response = await api
+      .put(`/api/blogs/${blogtoUpdate.id}`)
+      .send(helper.validBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+
+    const blogsAfterUpdate = await helper.blogsInDb();
+    expect(blogsAfterUpdate).toHaveLength(helper.initialBlogs.length);
+    expect(blogsAfterUpdate).toContainEqual(response.body);
+  });
+
+  test('fails with status code 404 if the blog does not exist', async () => {
+    const nonExistingid = await helper.nonExistingId();
+
+    await api
+      .put(`/api/blogs/${nonExistingid}`)
+      .send(helper.validBlog)
+      .expect(404);
+  });
+
+  test('fails with status code 400 if the id is invalid', async () => {
+    const invalidId = 'xxxxxxxxxxxxxx';
+
+    await api
+      .put(`/api/blogs/${invalidId}`)
+      .send(helper.validBlog)
+      .expect(400);
+  });
 });
 
 afterAll(() => {
