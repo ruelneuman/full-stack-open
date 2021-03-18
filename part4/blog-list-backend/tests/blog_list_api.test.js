@@ -33,6 +33,36 @@ describe('When there are initially some blogs saved', () => {
   });
 });
 
+describe('Fetching a blog by id', () => {
+  test('succeeds if a blog with that id exists', async () => {
+    const initialBlogs = await helper.blogsInDb();
+    const blogToFetch = initialBlogs[0];
+
+    const response = await api
+      .get(`/api/blogs/${blogToFetch.id}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+
+    expect(response.body).toEqual(blogToFetch);
+  });
+
+  test('fails with status code 404 if the blog does not exist', async () => {
+    const id = await helper.nonExistingId();
+
+    await api
+      .get(`/api/blogs/${id}`)
+      .expect(404);
+  });
+
+  test('fails with status code 400 if the id is invalid', async () => {
+    const invalidId = 'xxxxxxxxxxxxxx';
+
+    await api
+      .get(`/api/blogs/${invalidId}`)
+      .expect(400);
+  });
+});
+
 describe('Addition of a new blog', () => {
   test('succeeds with valid data', async () => {
     const response = await api
@@ -89,7 +119,7 @@ describe('Deletion of a blog', () => {
       .expect(404);
   });
 
-  test.only('fails with status code 400 if the id is invalid', async () => {
+  test('fails with status code 400 if the id is invalid', async () => {
     const invalidId = 'xxxxxxxxxxxxxx';
 
     await api
