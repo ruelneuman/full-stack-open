@@ -59,27 +59,29 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
   response.status(204).end();
 });
 
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const body = request.body;
+  const user = request.user;
+  const blog = await Blog.findById(request.params.id);
 
-  const blog = {
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes,
-  };
-
-  const updatedBlog = await Blog.findByIdAndUpdate(
-    request.params.id,
-    blog,
-    { new: true, runValidators: true }
-  );
-
-  if (updatedBlog) {
-    response.json(updatedBlog);
-  } else {
-    response.status(404).end();
+  if (!blog) {
+    return response.status(404).end();
   }
+
+  const blogPosterIsUser = (blog.user.toString() === user._id.toString());
+
+  if (!blogPosterIsUser) {
+    return response.status(401).json({ error: 'user not authorized to update this blog' });
+  }
+
+  blog.title = body.title;
+  blog.author = body.author;
+  blog.url = body.url;
+  blog.likes = body.likes;
+
+  const updatedBlog = await blog.save();
+
+  response.json(updatedBlog);
 });
 
 module.exports = blogsRouter;
