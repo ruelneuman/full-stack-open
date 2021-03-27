@@ -1,20 +1,34 @@
 const supertest = require('supertest');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const helper = require('./test_helper');
 const app = require('../app');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
 const api = supertest(app);
+let tokenForUserWithBlogs = null;
 
 beforeEach(async () => {
-  await Blog.deleteMany({});
   await User.deleteMany({});
+  await Blog.deleteMany({});
 
-  await Blog.insertMany(helper.initialBlogs);
+  const users = await User.insertMany(helper.hashedInitialUsers);
+  await Blog.insertMany(
+    helper.initialBlogs.map((blog) => ({ ...blog, user: users[0]._id, }))
+  );
+
+  tokenForUserWithBlogs = jwt.sign(
+    {
+      username: users[0].username,
+      id: users[0]._id,
+    },
+    process.env.SECRET
+  );
 });
 
+// GET /api/blogs
 describe('When there are initially some blogs saved', () => {
   test('blogs are returned as json', async () => {
     await api
@@ -37,6 +51,7 @@ describe('When there are initially some blogs saved', () => {
   });
 });
 
+// GET /api/blogs/:id
 describe('Fetching a blog by id', () => {
   test('succeeds if a blog with that id exists', async () => {
     const initialBlogs = await helper.blogsInDb();
@@ -47,7 +62,7 @@ describe('Fetching a blog by id', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/);
 
-    expect(response.body).toEqual(blogToFetch);
+    expect(response.body.id).toEqual(blogToFetch.id);
   });
 
   test('fails with status code 404 if the blog does not exist', async () => {
@@ -59,7 +74,7 @@ describe('Fetching a blog by id', () => {
   });
 
   test('fails with status code 400 if the id is invalid', async () => {
-    const invalidId = 'xxxxxxxxxxxxxx';
+    const invalidId = 'xxx';
 
     await api
       .get(`/api/blogs/${invalidId}`)
@@ -67,10 +82,12 @@ describe('Fetching a blog by id', () => {
   });
 });
 
+// POST /api/blogs
 describe('Addition of a new blog', () => {
   test('succeeds with valid data', async () => {
     await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.validBlog)
       .expect(200)
       .expect('Content-Type', /application\/json/);
@@ -83,9 +100,17 @@ describe('Addition of a new blog', () => {
     );
   });
 
+  test('fails with status code 401 if token not provided', async () => {
+    await api
+      .post('/api/blogs')
+      .send(helper.validBlog)
+      .expect(401);
+  });
+
   test('defaults likes to 0', async () => {
     const response = await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.blogWithMissingLikes);
 
     expect(response.body.likes).toBe(0);
@@ -94,16 +119,19 @@ describe('Addition of a new blog', () => {
   test('fails with status code 400 if the title or url properties are missing', async () => {
     await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.blogWithMissingTitle)
       .expect(400);
 
     await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.blogWithMissingUrl)
       .expect(400);
   });
 });
 
+// DELETE /api/blogs/:id
 describe('Deletion of a blog', () => {
   test('succeeds with a valid id', async () => {
     const initialBlogs = await helper.blogsInDb();
@@ -111,6 +139,7 @@ describe('Deletion of a blog', () => {
 
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .expect(204);
 
     const blogsAfterDelete = await helper.blogsInDb();
@@ -118,11 +147,21 @@ describe('Deletion of a blog', () => {
     expect(blogsAfterDelete).not.toContainEqual(blogToDelete);
   });
 
+  test('fails with status code 401 if token not provided', async () => {
+    const initialBlogs = await helper.blogsInDb();
+    const blogToDelete = initialBlogs[0];
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(401);
+  });
+
   test('fails with status code 404 if the blog does not exist', async () => {
     const id = await helper.nonExistingId();
 
     await api
       .delete(`/api/blogs/${id}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .expect(404);
   });
 
@@ -131,10 +170,12 @@ describe('Deletion of a blog', () => {
 
     await api
       .delete(`/api/blogs/${invalidId}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .expect(400);
   });
 });
 
+// PUT /api/blogs/:id
 describe('Update of a blog', () => {
   test('succeeds with a valid id', async () => {
     const initialBlogs = await helper.blogsInDb();
@@ -142,6 +183,7 @@ describe('Update of a blog', () => {
 
     await api
       .put(`/api/blogs/${blogtoUpdate.id}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.validBlog)
       .expect(200)
       .expect('Content-Type', /application\/json/);
@@ -153,11 +195,22 @@ describe('Update of a blog', () => {
     );
   });
 
+  test('fails with status code 401 if token not provided', async () => {
+    const initialBlogs = await helper.blogsInDb();
+    const blogtoUpdate = initialBlogs[0];
+
+    await api
+      .put(`/api/blogs/${blogtoUpdate.id}`)
+      .send(helper.validBlog)
+      .expect(401);
+  });
+
   test('fails with status code 404 if the blog does not exist', async () => {
     const nonExistingid = await helper.nonExistingId();
 
     await api
       .put(`/api/blogs/${nonExistingid}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.validBlog)
       .expect(404);
   });
@@ -167,11 +220,13 @@ describe('Update of a blog', () => {
 
     await api
       .put(`/api/blogs/${invalidId}`)
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(helper.validBlog)
       .expect(400);
   });
 });
 
+// POST /api/users
 describe('Addition of a new user', () => {
   test('succeeds with a valid user', async () => {
     const usersAtStart = await helper.usersInDb();
@@ -184,6 +239,7 @@ describe('Addition of a new user', () => {
 
     await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(newUser)
       .expect(200)
       .expect('Content-Type', /application\/json/);
@@ -217,6 +273,7 @@ describe('Addition of a new user', () => {
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(userWithDuplicateUsername)
       .expect(400);
 
@@ -231,6 +288,7 @@ describe('Addition of a new user', () => {
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(userWithoutPassword)
       .expect(400);
 
@@ -246,6 +304,7 @@ describe('Addition of a new user', () => {
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(userWithShortPassword)
       .expect(400);
 
@@ -260,6 +319,7 @@ describe('Addition of a new user', () => {
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(userWithoutUsername)
       .expect(400);
 
@@ -275,6 +335,7 @@ describe('Addition of a new user', () => {
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${tokenForUserWithBlogs}`)
       .send(userWithShortUsername)
       .expect(400);
 

@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
@@ -39,6 +40,33 @@ const initialBlogs = [
     likes: 2
   }
 ];
+
+const plaintextInitialUsers = [
+  {
+    username: 'Real_Batman123',
+    name: 'Bruce Wayne',
+    password: 'robinisthebest'
+  },
+  {
+    username: 'JohnDoe85',
+    name: 'John Doe',
+    password: 'letmein123'
+  },
+  {
+    username: 'BobBarker78',
+    name: 'Bob Barker',
+    password: 'thepriceisright'
+  }
+];
+
+const hashedInitialUsers = plaintextInitialUsers.map((user) => {
+  const passwordHash = bcrypt.hashSync(user.password, 10);
+  return {
+    username: user.username,
+    name: user.name,
+    passwordHash
+  };
+});
 
 const validBlog = {
   title: 'My Blog Post',
@@ -91,6 +119,8 @@ const usersInDb = async () => {
 
 module.exports = {
   initialBlogs,
+  plaintextInitialUsers,
+  hashedInitialUsers,
   validBlog,
   blogWithMissingTitle,
   blogWithMissingUrl,
