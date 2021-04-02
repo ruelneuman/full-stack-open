@@ -6,25 +6,37 @@ import blogService from './services/blogs';
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => {   
     const setInitialBlogs = async () => {
-      const blogs = await blogService.getAll();
-      setBlogs(blogs);
-    }
+      setIsError(false);
+      setIsLoading(true);
+
+      try {
+        const blogs = await blogService.getAll();
+
+        setBlogs(blogs);
+      } catch (error) {
+        console.error(error);
+
+        setIsError(true);
+      }
+
+      setIsLoading(false);
+    };
 
     setInitialBlogs();
   }, []);
 
-  return (
-    <>
-      {
-        !user
-          ? <Login setUser={setUser} />
-          : <BlogList blogs={blogs} user={user} />
-      }
-    </>
-  )
+  if (!user) return (<Login setUser={setUser} />);
+
+  if (isError) return (<div>Error: Could not load blog list</div>);
+
+  if (isLoading) return (<div>Loading...</div>);
+
+  return (<BlogList blogs={blogs} user={user} />)
 };
 
 export default App;
