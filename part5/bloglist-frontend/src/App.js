@@ -9,7 +9,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {   
+  useEffect(() => {
     const setInitialBlogs = async () => {
       setIsError(false);
       setIsLoading(true);
@@ -30,13 +30,33 @@ const App = () => {
     setInitialBlogs();
   }, []);
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser');
+
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogAppUser');
+    setUser(null);
+  }
+
   if (!user) return (<Login setUser={setUser} />);
 
   if (isError) return (<div>Error: Could not load blog list</div>);
 
   if (isLoading) return (<div>Loading...</div>);
 
-  return (<BlogList blogs={blogs} user={user} />)
+  return (
+    <BlogList
+      blogs={blogs}
+      user={user}
+      handleLogout={handleLogout}
+    />)
 };
 
 export default App;
