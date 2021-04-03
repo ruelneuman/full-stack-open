@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, displayNotification }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,14 +22,20 @@ const Login = ({ setUser }) => {
       setUser(user);
       setUsername('');
       setPassword('');
+
+      const message = `Logged in`;
+      displayNotification(message, 'success');
     } catch (error) {
-      console.error(error)
+      console.error(error);
+
+      const message = `Incorrect username or password`;
+      displayNotification(message, 'failure');
     }
   };
 
   return (
     <div>
-      <h2>Log in to Application</h2>
+      <h1>Log in to Application</h1>
       <form onSubmit={handleLogin}>
         <div>
           <label htmlFor="username">username:</label>
