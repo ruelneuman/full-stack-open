@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import BlogList from './components/BlogList';
-import Login from './components/Login';
 import Notification from './components/Notification';
+import LoginForm from './components/LoginForm';
+import UserInfo from './components/UserInfo';
+import BlogList from './components/BlogList';
 import blogService from './services/blogs';
+import loginService from './services/login';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -41,11 +43,48 @@ const App = () => {
     }
   }, []);
 
+  const handleLogin = async (userObject) => {
+    try {
+      const user = await loginService.login(userObject)
+
+      window.localStorage.setItem(
+        'loggedBlogAppUser', JSON.stringify(user)
+      );
+      blogService.setToken(user.token);
+      setUser(user);
+
+      const message = `Logged in`;
+      displayNotification(message, 'success');
+    } catch (error) {
+      console.error(error);
+
+      const message = `Incorrect username or password`;
+      displayNotification(message, 'failure');
+    }
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogAppUser');
     setUser(null);
+
     const message = `Logged out`;
     displayNotification(message, 'success');
+  }
+
+  const addBlog = async (blogObject) => {
+    try {
+      const response = await blogService.create(blogObject);
+
+      setBlogs(blogs.concat(response));
+      
+      const message = `${response.title} by ${response.author} was added`;
+      displayNotification(message, 'success');
+    } catch (error) {
+      console.error(error);
+
+      const message = 'Could not add blog';
+      displayNotification(message, 'failure');
+    }
   }
 
   const displayNotification = (message, type = 'success') => {
@@ -59,10 +98,7 @@ const App = () => {
     return (
       <>
         <Notification notification={notification} />
-        <Login
-          setUser={setUser}
-          displayNotification={displayNotification}
-        />
+        <LoginForm handleLogin={handleLogin} />
       </>
     );
   }
@@ -74,13 +110,8 @@ const App = () => {
   return (
     <>
       <Notification notification={notification} />
-      <BlogList
-        blogs={blogs}
-        setBlogs={setBlogs}
-        user={user}
-        handleLogout={handleLogout}
-        displayNotification={displayNotification}
-      />
+      <UserInfo user={user} handleLogout={handleLogout} />
+      <BlogList blogs={blogs} addBlog={addBlog} />
     </>
   )
 };

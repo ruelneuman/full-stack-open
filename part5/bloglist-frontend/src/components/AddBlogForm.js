@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import blogService from '../services/blogs';
 
-const AddBlogForm = ({ blogs, setBlogs, displayNotification }) => {
+const AddBlogForm = ({ addBlog }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
 
-  const AddBlog = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const blogObject = {
@@ -16,26 +15,17 @@ const AddBlogForm = ({ blogs, setBlogs, displayNotification }) => {
       likes: 0,
     }
 
-    try {
-      const response = await blogService.create(blogObject);
+    addBlog(blogObject);
 
-      setBlogs(blogs.concat(response));
-      setTitle('');
-      setAuthor('');
-      setUrl('');
-      
-      const message = `${response.title} by ${response.author} was added`;
-      displayNotification(message, 'success');
-    } catch (error) {
-      console.error(error);
-      displayNotification(error, 'failure');
-    }
+    setTitle('');
+    setAuthor('');
+    setUrl('');
   };
 
   return (
     <div>
       <h2>Add New Blog</h2>
-      <form onSubmit={AddBlog}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">title:</label>
           <input

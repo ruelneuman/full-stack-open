@@ -1,42 +1,23 @@
 import React, { useState } from 'react';
-import loginService from '../services/login';
-import blogService from '../services/blogs';
 
-const Login = ({ setUser, displayNotification }) => {
+const LoginForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
-      
-      window.localStorage.setItem(
-        'loggedBlogAppUser', JSON.stringify(user)
-      );
-      blogService.setToken(user.token);
-      setUser(user);
-      setUsername('');
-      setPassword('');
+    const user = { username, password };
+    handleLogin(user);
 
-      const message = `Logged in`;
-      displayNotification(message, 'success');
-    } catch (error) {
-      console.error(error);
-
-      const message = `Incorrect username or password`;
-      displayNotification(message, 'failure');
-    }
+    setUsername('');
+    setPassword('');
   };
 
   return (
     <div>
       <h1>Log in to Application</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">username:</label>
           <input
@@ -61,4 +42,4 @@ const Login = ({ setUser, displayNotification }) => {
   );
 }
 
-export default Login;
+export default LoginForm;
