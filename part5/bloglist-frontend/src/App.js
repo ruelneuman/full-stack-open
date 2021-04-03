@@ -45,7 +45,7 @@ const App = () => {
     setUser(null);
   }
 
-  if (!user) return (<Login setUser={setUser} />);
+   if (!user) return (<Login setUser={setUser} />);
 
   if (isError) return (<div>Error: Could not load blog list</div>);
 
@@ -54,6 +54,7 @@ const App = () => {
   return (
     <BlogList
       blogs={blogs}
+      setBlogs={setBlogs}
       user={user}
       handleLogout={handleLogout}
     />)
