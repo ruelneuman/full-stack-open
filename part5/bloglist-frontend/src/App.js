@@ -5,6 +5,7 @@ import UserInfo from './components/UserInfo';
 import BlogList from './components/BlogList';
 import blogService from './services/blogs';
 import loginService from './services/login';
+import handleError from './utils/handleError';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -23,7 +24,8 @@ const App = () => {
 
         setBlogs(blogs);
       } catch (error) {
-        console.error(error);
+        const message = `Could not load blogs: ${handleError(error)}`;
+        displayNotification(message, 'failure');
         setIsError(true);
       }
 
@@ -56,9 +58,7 @@ const App = () => {
       const message = `Logged in`;
       displayNotification(message, 'success');
     } catch (error) {
-      console.error(error);
-
-      const message = `Incorrect username or password`;
+      const message = `Login unsuccessful: ${handleError(error)}`;
       displayNotification(message, 'failure');
     }
   }
@@ -80,9 +80,7 @@ const App = () => {
       const message = `${response.title} by ${response.author} was added`;
       displayNotification(message, 'success');
     } catch (error) {
-      console.error(error);
-
-      const message = 'Could not add blog';
+      const message = `Add blog unsuccessful: ${handleError(error)}`;
       displayNotification(message, 'failure');
     }
   }
@@ -103,7 +101,7 @@ const App = () => {
     );
   }
 
-  if (isError) return (<div>Error: Could not load blog list</div>);
+  if (isError) return (<div>Error: Could not load blogs</div>);
 
   if (isLoading) return (<div>Loading...</div>);
 
