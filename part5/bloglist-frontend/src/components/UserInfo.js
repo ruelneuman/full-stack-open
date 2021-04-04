@@ -15,6 +15,6 @@ UserInfo.propTypes = {
     username: PropTypes.string.isRequired,
   }).isRequired,
   handleLogout: PropTypes.func.isRequired,
-}
+};
 
 export default UserInfo;

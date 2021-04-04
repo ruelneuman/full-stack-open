@@ -14,7 +14,7 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
       author,
       url,
       likes: 0,
-    }
+    };
 
     addBlog(blogObject);
 
@@ -64,6 +64,6 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
 
 AddBlogForm.propTypes = {
   addBlog: PropTypes.func.isRequired,
-}
+};
 
 export default AddBlogForm;

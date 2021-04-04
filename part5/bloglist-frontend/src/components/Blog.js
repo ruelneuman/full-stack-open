@@ -20,13 +20,13 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
     const newBlog = { ...blog, likes: (blog.likes + 1) };
 
     updateBlog(blog.id, newBlog);
-  }
+  };
 
   const confirmRemoveBlog = () => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
       removeBlog(blog.id);
     }
-  }
+  };
 
   const details = () => {
     return (
@@ -44,7 +44,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
         )}
       </>
     );
-  }
+  };
 
   return (
     <div style={blogStyle}>
@@ -57,7 +57,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
       {isExpanded && details()}
     </div>
   );
-}
+};
 
 Blog.propTypes = {
   blog: PropTypes.shape({
@@ -79,6 +79,6 @@ Blog.propTypes = {
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
-}
+};
 
 export default Blog;

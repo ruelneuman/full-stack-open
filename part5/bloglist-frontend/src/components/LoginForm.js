@@ -41,10 +41,10 @@ const LoginForm = ({ handleLogin }) => {
       </form>
     </div>
   );
-}
+};
 
 LoginForm.propTypes = {
-  handleLogin: PropTypes.func.isRequired, 
-}
+  handleLogin: PropTypes.func.isRequired,
+};
 
 export default LoginForm;

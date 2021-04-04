@@ -13,7 +13,7 @@ const BlogList = ({ blogs, addBlog, updateBlog, removeBlog, user }) => {
       </Togglable>
       <div>
         {blogs
-          .sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0))
+          .sort((a, b) => (b.likes || 0) - (a.likes || 0))
           .map(blog =>
             <Blog
               key={blog.id}
@@ -26,7 +26,7 @@ const BlogList = ({ blogs, addBlog, updateBlog, removeBlog, user }) => {
       </div>
     </div>
   );
-}
+};
 
 BlogList.propTypes = {
   blogs: PropTypes.arrayOf(PropTypes.shape({
@@ -49,6 +49,6 @@ BlogList.propTypes = {
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
-}
+};
 
 export default BlogList;

@@ -12,7 +12,7 @@ const Togglable = ({ buttonLabel, children }) => {
   };
 
   const childrenWithVisibilityToggle = React.Children.map(children, child => {
-      return React.cloneElement(child, { toggleVisibility });
+    return React.cloneElement(child, { toggleVisibility });
   });
 
   return (
@@ -31,7 +31,7 @@ const Togglable = ({ buttonLabel, children }) => {
 Togglable.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
-}
+};
 
 
 export default Togglable;

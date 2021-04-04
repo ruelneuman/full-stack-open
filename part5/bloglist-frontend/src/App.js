@@ -47,7 +47,7 @@ const App = () => {
 
   const handleLogin = async (userObject) => {
     try {
-      const user = await loginService.login(userObject)
+      const user = await loginService.login(userObject);
 
       window.localStorage.setItem(
         'loggedBlogAppUser', JSON.stringify(user)
@@ -55,21 +55,21 @@ const App = () => {
       blogService.setToken(user.token);
       setUser(user);
 
-      const message = `Logged in`;
+      const message = 'Logged in';
       displayNotification(message, 'success');
     } catch (error) {
       const message = `Login unsuccessful: ${handleError(error)}`;
       displayNotification(message, 'failure');
     }
-  }
+  };
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogAppUser');
     setUser(null);
 
-    const message = `Logged out`;
+    const message = 'Logged out';
     displayNotification(message, 'success');
-  }
+  };
 
   const addBlog = async (blogObject) => {
     try {
@@ -114,7 +114,7 @@ const App = () => {
     setTimeout(() => {
       setNotification(null);
     }, 3000);
-  }
+  };
 
   if (!user) {
     return (
@@ -141,7 +141,7 @@ const App = () => {
         user={user}
       />
     </>
-  )
+  );
 };
 
 export default App;
