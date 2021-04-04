@@ -76,14 +76,25 @@ const App = () => {
       const response = await blogService.create(blogObject);
 
       setBlogs(blogs.concat(response));
-      
+
       const message = `${response.title} by ${response.author} was added`;
       displayNotification(message, 'success');
     } catch (error) {
       const message = `Add blog unsuccessful: ${handleError(error)}`;
       displayNotification(message, 'failure');
     }
-  }
+  };
+
+  const updateBlog = async (id, blogObject) => {
+    try {
+      const response = await blogService.update(id, blogObject);
+      
+      setBlogs(blogs.map((blog) => (blog.id !== id ? blog : response)));
+    } catch (error) {
+      const message = `Unable to 'like': ${handleError(error)}`;
+      displayNotification(message, 'failure');
+    }
+  };
 
   const displayNotification = (message, type = 'success') => {
     setNotification({ message, type });
@@ -109,7 +120,11 @@ const App = () => {
     <>
       <Notification notification={notification} />
       <UserInfo user={user} handleLogout={handleLogout} />
-      <BlogList blogs={blogs} addBlog={addBlog} />
+      <BlogList
+        blogs={blogs}
+        addBlog={addBlog}
+        updateBlog={updateBlog}
+      />
     </>
   )
 };

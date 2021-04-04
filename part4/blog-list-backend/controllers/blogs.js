@@ -35,6 +35,9 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
   });
 
   const savedBlog = await blog.save();
+  await savedBlog
+    .populate('user', { username: 1, name: 1 })
+    .execPopulate();
   user.blogs = user.blogs.concat(savedBlog._id);
   await user.save();
 
@@ -61,17 +64,10 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
 
 blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const body = request.body;
-  const user = request.user;
   const blog = await Blog.findById(request.params.id);
 
   if (!blog) {
     return response.status(404).end();
-  }
-
-  const blogPosterIsUser = (blog.user.toString() === user._id.toString());
-
-  if (!blogPosterIsUser) {
-    return response.status(401).json({ error: 'user not authorized to update this blog' });
   }
 
   blog.title = body.title;
@@ -80,6 +76,9 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   blog.likes = body.likes;
 
   const updatedBlog = await blog.save();
+  await updatedBlog
+    .populate('user', { username: 1, name: 1 })
+    .execPopulate();
 
   response.json(updatedBlog);
 });
