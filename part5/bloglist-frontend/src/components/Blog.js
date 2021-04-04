@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const ownedByUser = (user.username === blog.user.username);
 
   const blogStyle = {
     border: '1px solid black',
@@ -19,6 +21,12 @@ const Blog = ({ blog, updateBlog }) => {
     updateBlog(blog.id, newBlog);
   }
 
+  const confirmRemoveBlog = () => {
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+      removeBlog(blog.id);
+    }
+  }
+
   const details = () => {
     return (
       <>
@@ -28,6 +36,11 @@ const Blog = ({ blog, updateBlog }) => {
           <button type="button" onClick={likeBlog}>like</button>
         </div>
         <div>{blog.author}</div>
+        {ownedByUser && (
+          <button type="button" onClick={confirmRemoveBlog}>
+            Remove
+          </button>
+        )}
       </>
     );
   }
