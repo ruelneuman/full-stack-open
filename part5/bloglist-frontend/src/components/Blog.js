@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-);
+const Blog = ({ blog }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const blogStyle = {
+    border: '1px solid black',
+    margin: '5px 0px',
+    padding: '4px',
+  };
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const details = () => {
+    return (
+      <>
+        <div>{blog.url}</div>
+        <div>
+          Likes: {blog.likes}
+          <button type="button">like</button>
+        </div>
+        <div>{blog.author}</div>
+      </>
+    );
+  }
+
+  return (
+    <div style={blogStyle}>
+      <div>
+        {blog.title}
+        <button type="button" onClick={toggleExpansion}>
+          {isExpanded ? 'Hide Details' : 'Show Details'}
+        </button>
+      </div>
+      {isExpanded && details()}
+    </div>
+  );
+}
 
 export default Blog;
