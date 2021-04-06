@@ -18,7 +18,7 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
 
     addBlog(blogObject);
 
-    toggleVisibility();
+    toggleVisibility && toggleVisibility();
 
     setTitle('');
     setAuthor('');
@@ -30,29 +30,32 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
       <h2>Add New Blog</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="title">title:</label>
+          <label htmlFor="title-input">title:</label>
           <input
             type="text"
             value={title}
-            name="title"
+            name="title-input"
+            id='title-input'
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          <label htmlFor="author">author:</label>
+          <label htmlFor="author-input">author:</label>
           <input
             type="text"
             value={author}
-            name="author"
+            name="author-input"
+            id="author-input"
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          <label htmlFor="url">url:</label>
+          <label htmlFor="url-input">url:</label>
           <input
             type="text"
             value={url}
-            name="url"
+            name="url-input"
+            id="url-input"
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>

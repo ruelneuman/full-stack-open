@@ -73,6 +73,6 @@ describe('<Blog />', () => {
     fireEvent.click(likeButton);
     fireEvent.click(likeButton);
 
-    expect(mockUpdateBlog.mock.calls).toHaveLength(2);
+    expect(mockUpdateBlog).toHaveBeenCalledTimes(2);
   });
 });
