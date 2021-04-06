@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Blog from './Blog';
 
@@ -48,5 +48,14 @@ describe('<Blog />', () => {
     expect(component.container).not.toHaveTextContent(blog.url);
 
     expect(component.container).not.toHaveTextContent(blog.likes);
+  });
+
+  test('renders the url and likes after the \'Show Details\' button is clicked', () => {
+    const button = component.getByText('Show Details');
+    fireEvent.click(button);
+
+    expect(component.container).toHaveTextContent(blog.url);
+
+    expect(component.container).toHaveTextContent(blog.likes);
   });
 });
