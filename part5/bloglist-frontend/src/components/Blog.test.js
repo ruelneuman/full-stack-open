@@ -51,11 +51,28 @@ describe('<Blog />', () => {
   });
 
   test('renders the url and likes after the \'Show Details\' button is clicked', () => {
-    const button = component.getByText('Show Details');
-    fireEvent.click(button);
+    const showDetailsButton = component.getByRole('button', {
+      name: /show details/i
+    });
+    fireEvent.click(showDetailsButton);
 
     expect(component.container).toHaveTextContent(blog.url);
 
     expect(component.container).toHaveTextContent(blog.likes);
+  });
+
+  test('like button when clicked twice calls the corresponding event handler twice', () => {
+    const showDetailsButton = component.getByRole('button', {
+      name: /show details/i
+    });
+    fireEvent.click(showDetailsButton);
+
+    const likeButton = component.getByRole('button', {
+      name: /like/i
+    });
+    fireEvent.click(likeButton);
+    fireEvent.click(likeButton);
+
+    expect(mockUpdateBlog.mock.calls).toHaveLength(2);
   });
 });
