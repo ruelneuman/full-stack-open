@@ -6,12 +6,12 @@ import PropTypes from 'prop-types';
 
 const BlogList = ({ blogs, addBlog, updateBlog, removeBlog, user }) => {
   return (
-    <div id="blog-list">
+    <div className="blog-list">
       <h1>Blogs</h1>
       <Togglable buttonLabel="Add blog" >
         <AddBlogForm addBlog={addBlog} />
       </Togglable>
-      <div>
+      <div className="blogs">
         {blogs
           .sort((a, b) => (b.likes || 0) - (a.likes || 0))
           .map(blog =>
