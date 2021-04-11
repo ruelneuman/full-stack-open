@@ -46,8 +46,8 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   };
 
   return (
-    <div style={blogStyle}>
-      <div className="blog">
+    <div className="blog" style={blogStyle}>
+      <div>
         {blog.title} by {blog.author}
         <button type="button" onClick={toggleExpansion}>
           {isExpanded ? 'Hide Details' : 'Show Details'}

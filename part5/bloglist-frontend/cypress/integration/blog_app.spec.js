@@ -66,5 +66,27 @@ describe('Blog app', function () {
         .should('be.visible')
         .and('contain', `${title} by ${author}`);
     });
+
+    describe('and there is a blog from that user', function () {
+      beforeEach(function () {
+        cy.createBlog(blogs[0]);
+      });
+
+      it('a blog can be liked', function () {
+        cy.contains('button', 'Show Details').click();
+
+        cy.get('.blogs .blog')
+          .should('be.visible')
+          .and('contain', 'Likes: 0');
+
+        cy.contains('button', 'like')
+          .should('be.visible')
+          .click();
+
+        cy.get('.blogs .blog')
+          .should('be.visible')
+          .and('contain', 'Likes: 1');
+      });
+    });
   });
 });
