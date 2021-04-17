@@ -1,23 +1,30 @@
 const reducer = (state = '', action) => {
   switch (action.type) {
-    case 'SET_NOTIFICATION':
+    case 'SHOW_NOTIFICATION':
       return action.payload;
-    case 'REMOVE_NOTIFICATION':
+    case 'HIDE_NOTIFICATION':
       return '';
     default:
       return state;
   }
 };
 
-export const setNotification = (notification) => {
+let timeoutID = null;
+
+export const showNotificationWithTimeout = (dispatch, message) => {
+  clearTimeout(timeoutID);
+  timeoutID = setTimeout(() => {
+    dispatch(hideNotification());
+  }, 5000);
+
   return {
-    type: 'SET_NOTIFICATION',
-    payload: notification
+    type: 'SHOW_NOTIFICATION',
+    payload: message
   };
 };
 
-export const removeNotification = () => {
-  return { type: 'REMOVE_NOTIFICATION' };
+export const hideNotification = () => {
+  return { type: 'HIDE_NOTIFICATION' };
 };
 
 export default reducer;

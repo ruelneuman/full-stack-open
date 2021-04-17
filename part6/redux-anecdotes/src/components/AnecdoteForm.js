@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addAnecdote } from '../reducers/anecdoteReducer';
-import { setNotification } from '../reducers/notificationReducer';
+import { showNotificationWithTimeout } from '../reducers/notificationReducer';
 
 const AnecdoteForm = () => {
   const [formValue, setFormValue] = useState('');
@@ -14,7 +14,8 @@ const AnecdoteForm = () => {
     dispatch(addAnecdote(formValue));
 
     const message = `Added: '${formValue}'`;
-    dispatch(setNotification(message));
+    dispatch(showNotificationWithTimeout(dispatch, message));
+
     setFormValue('');
   };
 
