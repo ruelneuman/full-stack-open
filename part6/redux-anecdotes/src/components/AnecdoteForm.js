@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addAnecdote } from '../reducers/anecdoteReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
 const AnecdoteForm = () => {
-  const [anecdote, setAnecdote] = useState('');
+  const [formValue, setFormValue] = useState('');
 
   const dispatch = useDispatch();
 
   const createAnecdote = (event) => {
     event.preventDefault();
-    dispatch(addAnecdote(anecdote));
-    setAnecdote('');
+
+    dispatch(addAnecdote(formValue));
+
+    const message = `Added: '${formValue}'`;
+    dispatch(setNotification(message));
+    setFormValue('');
   };
 
   const handleChange = (event) => {
-    setAnecdote(event.target.value);
+    setFormValue(event.target.value);
   };
 
   return (
@@ -23,7 +28,7 @@ const AnecdoteForm = () => {
         <input
           type="text"
           name="anecdote"
-          value={anecdote}
+          value={formValue}
           onChange={handleChange}
         />
       </div>
