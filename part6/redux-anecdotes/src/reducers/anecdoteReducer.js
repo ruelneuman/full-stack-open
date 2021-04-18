@@ -18,9 +18,15 @@ const reducer = (state = [], action) => {
 };
 
 export const voteAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    payload: { id }
+  return async (dispatch, getState) => {
+    const anecdote = getState().anecdotes.find((anecdote) => anecdote.id === id);
+
+    await anecdoteService.update(id, { ...anecdote, votes: anecdote.votes + 1 });
+
+    dispatch({
+      type: 'VOTE',
+      payload: { id }
+    });
   };
 };
 

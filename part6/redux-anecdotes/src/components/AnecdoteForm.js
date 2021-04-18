@@ -11,7 +11,9 @@ const AnecdoteForm = () => {
   const createAnecdote = async (event) => {
     event.preventDefault();
 
-    dispatch(addAnecdote(formValue));
+    const anecdote = { content: formValue, votes: 0 };
+
+    dispatch(addAnecdote(anecdote));
 
     const message = `Added: '${formValue}'`;
     dispatch(showNotificationWithTimeout(dispatch, message));
