@@ -16,7 +16,7 @@ const AnecdoteForm = () => {
     dispatch(addAnecdote(anecdote));
 
     const message = `Added: '${formValue}'`;
-    dispatch(showNotificationWithTimeout(dispatch, message));
+    dispatch(showNotificationWithTimeout(message, 5));
 
     setFormValue('');
   };

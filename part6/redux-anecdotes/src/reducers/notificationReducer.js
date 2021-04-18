@@ -11,12 +11,18 @@ const reducer = (state = '', action) => {
 
 let timeoutID = null;
 
-export const showNotificationWithTimeout = (dispatch, message) => {
-  clearTimeout(timeoutID);
-  timeoutID = setTimeout(() => {
-    dispatch(hideNotification());
-  }, 5000);
+export const showNotificationWithTimeout = (message, seconds) => {
+  return async (dispatch) => {
+    dispatch(showNotification(message));
 
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(hideNotification());
+    }, seconds * 1000);
+  };
+};
+
+export const showNotification = (message) => {
   return {
     type: 'SHOW_NOTIFICATION',
     payload: message

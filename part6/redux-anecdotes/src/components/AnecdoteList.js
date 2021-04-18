@@ -20,7 +20,7 @@ const AnecdoteList = () => {
     });
 
     const message = `Voted for: '${anecdote.content}'`;
-    dispatch(showNotificationWithTimeout(dispatch, message));
+    dispatch(showNotificationWithTimeout(message, 5));
   };
 
   return (
