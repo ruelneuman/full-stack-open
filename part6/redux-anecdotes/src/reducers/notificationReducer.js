@@ -15,7 +15,10 @@ export const showNotificationWithTimeout = (message, seconds) => {
   return async (dispatch) => {
     dispatch(showNotification(message));
 
-    clearTimeout(timeoutID);
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+
     timeoutID = setTimeout(() => {
       dispatch(hideNotification());
     }, seconds * 1000);
