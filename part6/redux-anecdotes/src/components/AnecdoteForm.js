@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addAnecdote } from '../reducers/anecdoteReducer';
 import { showNotificationWithTimeout } from '../reducers/notificationReducer';
-import anecdotesService from '../services/anecdotes';
+import anecdoteService from '../services/anecdotes';
 
 const AnecdoteForm = () => {
   const [formValue, setFormValue] = useState('');
@@ -12,7 +12,7 @@ const AnecdoteForm = () => {
   const createAnecdote = async (event) => {
     event.preventDefault();
 
-    const anecdote = await anecdotesService.createNew(formValue);
+    const anecdote = await anecdoteService.createNew(formValue);
 
     dispatch(addAnecdote(anecdote));
 
