@@ -1,26 +1,22 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { voteAnecdote } from '../reducers/anecdoteReducer';
 import { showNotificationWithTimeout } from '../reducers/notificationReducer';
 
-const AnecdoteList = () => {
-  const dispatch = useDispatch();
-
-  const anecdotes = useSelector(({ anecdotes, filter }) => {
-    return anecdotes.filter((anecdote) => {
-      return anecdote.content.toLowerCase().includes(filter.toLowerCase());
-    });
-  });
-
+const AnecdoteList = ({
+  anecdotes,
+  voteAnecdote,
+  showNotificationWithTimeout
+}) => {
   const vote = (id) => {
-    dispatch(voteAnecdote(id));
+    voteAnecdote(id);
 
     const anecdote = anecdotes.find((anecdote) => {
       return anecdote.id === id;
     });
 
     const message = `Voted for: '${anecdote.content}'`;
-    dispatch(showNotificationWithTimeout(message, 5));
+    showNotificationWithTimeout(message, 5);
   };
 
   return (
@@ -40,4 +36,19 @@ const AnecdoteList = () => {
   );
 };
 
-export default AnecdoteList;
+const mapStateToProps = ({ anecdotes, filter }) => {
+  const filteredAnecdotes = anecdotes.filter((anecdote) => {
+    return anecdote.content.toLowerCase().includes(filter.toLowerCase());
+  });
+
+  return {
+    anecdotes: filteredAnecdotes
+  };
+};
+
+const mapDispatchToProps = {
+  voteAnecdote,
+  showNotificationWithTimeout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList);
