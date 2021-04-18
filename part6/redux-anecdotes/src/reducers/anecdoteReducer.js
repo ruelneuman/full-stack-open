@@ -24,10 +24,13 @@ export const voteAnecdote = (id) => {
   };
 };
 
-export const addAnecdote = (anecdote) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    payload: anecdote
+export const addAnecdote = (content) => {
+  return async (dispatch) => {
+    const anecdote = await anecdoteService.createNew(content);
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      payload: anecdote
+    });
   };
 };
 
