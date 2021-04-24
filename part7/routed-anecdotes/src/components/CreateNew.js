@@ -13,13 +13,19 @@ const CreateNew = ({ addNew }) => {
     event.preventDefault();
 
     addNew({
-      content,
-      author,
-      info,
+      content: content.fieldProps.value,
+      author: author.fieldProps.value,
+      info: info.fieldProps.value,
       votes: 0
     });
 
     history.push('/');
+  };
+
+  const resetFields = () => {
+    content.reset();
+    author.reset();
+    info.reset();
   };
 
   return (
@@ -28,17 +34,18 @@ const CreateNew = ({ addNew }) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...content} />
+          <input {...content.fieldProps} />
         </div>
         <div>
           author
-          <input {...author} />
+          <input {...author.fieldProps} />
         </div>
         <div>
           url for more info
-          <input {...info} />
+          <input {...info.fieldProps} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button type="button" onClick={resetFields}>reset</button>
       </form>
     </div>
   );
