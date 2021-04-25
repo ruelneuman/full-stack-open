@@ -11,7 +11,7 @@ export const useField = (name, type = 'text') => {
     setValue('');
   };
 
-  const fieldProps = { type, name, value, onChange };
+  const props = { type, name, value, onChange };
 
-  return { fieldProps, reset };
+  return [ props, reset ];
 };

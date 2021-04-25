@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { useField } from '../hooks';
 
 const CreateNew = ({ addNew }) => {
-  const content = useField('content');
-  const author = useField('author');
-  const info = useField('info', 'url');
+  const [content, contentReset] = useField('content');
+  const [author, authorReset] = useField('author');
+  const [info, infoReset] = useField('info', 'url');
 
   const history = useHistory();
 
@@ -13,9 +13,9 @@ const CreateNew = ({ addNew }) => {
     event.preventDefault();
 
     addNew({
-      content: content.fieldProps.value,
-      author: author.fieldProps.value,
-      info: info.fieldProps.value,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     });
 
@@ -23,9 +23,9 @@ const CreateNew = ({ addNew }) => {
   };
 
   const resetFields = () => {
-    content.reset();
-    author.reset();
-    info.reset();
+    contentReset();
+    authorReset();
+    infoReset();
   };
 
   return (
@@ -34,15 +34,15 @@ const CreateNew = ({ addNew }) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...content.fieldProps} />
+          <input {...content} />
         </div>
         <div>
           author
-          <input {...author.fieldProps} />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input {...info.fieldProps} />
+          <input {...info} />
         </div>
         <button type="submit">create</button>
         <button type="button" onClick={resetFields}>reset</button>
