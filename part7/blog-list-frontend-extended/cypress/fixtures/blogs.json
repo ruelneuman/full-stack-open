@@ -1,0 +1,20 @@
+[
+  {
+    "title": "First Blog",
+    "author": "Test Author",
+    "url": "http://www.example.com/blog1",
+    "likes": 5
+  },
+  {
+    "title": "Second Blog",
+    "author": "Test Author",
+    "url": "http://www.example.com/blog2",
+    "likes": 1
+  },
+  {
+    "title": "Third Blog",
+    "author": "Test Author",
+    "url": "http://www.example.com/blog3",
+    "likes": 3
+  }
+]
