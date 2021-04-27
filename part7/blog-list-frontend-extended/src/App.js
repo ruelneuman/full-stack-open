@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { showNotificationWithTimeout } from './reducers/notificationReducer';
 import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import UserInfo from './components/UserInfo';
@@ -12,7 +14,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [notification, setNotification] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const setInitialBlogs = async () => {
@@ -25,7 +28,7 @@ const App = () => {
         setBlogs(blogs);
       } catch (error) {
         const message = `Could not load blogs: ${handleError(error)}`;
-        displayNotification(message, 'failure');
+        showNotificationWithTimeout(message, 'failure');
         setIsError(true);
       }
 
@@ -56,10 +59,10 @@ const App = () => {
       setUser(user);
 
       const message = 'Logged in';
-      displayNotification(message, 'success');
+      dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Login unsuccessful: ${handleError(error)}`;
-      displayNotification(message, 'failure');
+      dispatch(showNotificationWithTimeout(message, 'failure'));
     }
   };
 
@@ -68,7 +71,7 @@ const App = () => {
     setUser(null);
 
     const message = 'Logged out';
-    displayNotification(message, 'success');
+    dispatch(showNotificationWithTimeout(message, 'success'));
   };
 
   const addBlog = async (blogObject) => {
@@ -78,10 +81,10 @@ const App = () => {
       setBlogs(blogs.concat(response));
 
       const message = `'${response.title}' by ${response.author} was added`;
-      displayNotification(message, 'success');
+      dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Add blog unsuccessful: ${handleError(error)}`;
-      displayNotification(message, 'failure');
+      dispatch(showNotificationWithTimeout(message, 'failure'));
     }
   };
 
@@ -90,9 +93,12 @@ const App = () => {
       const response = await blogService.update(id, blogObject);
 
       setBlogs(blogs.map((blog) => (blog.id !== id ? blog : response)));
+
+      const message = `Liked ${response.title} by ${response.author}`;
+      dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Unable to like: ${handleError(error)}`;
-      displayNotification(message, 'failure');
+      dispatch(showNotificationWithTimeout(message, 'failure'));
     }
   };
 
@@ -102,24 +108,17 @@ const App = () => {
 
       setBlogs(blogs.filter((blog) => (blog.id !== id)));
 
-      displayNotification('Blog removed', 'success');
+      dispatch(showNotificationWithTimeout('Blog removed', 'success'));
     } catch (error) {
       const message = `Unable to remove blog: ${handleError(error)}`;
-      displayNotification(message, 'failure');
+      dispatch(showNotificationWithTimeout(message, 'failure'));
     }
-  };
-
-  const displayNotification = (message, type = 'success') => {
-    setNotification({ message, type });
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
   };
 
   if (!user) {
     return (
       <>
-        <Notification notification={notification} />
+        <Notification />
         <LoginForm handleLogin={handleLogin} />
       </>
     );
@@ -131,7 +130,7 @@ const App = () => {
 
   return (
     <>
-      <Notification notification={notification} />
+      <Notification />
       <UserInfo user={user} handleLogout={handleLogout} />
       <BlogList
         blogs={blogs}
