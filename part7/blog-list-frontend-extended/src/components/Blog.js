@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteBlog, likeBlog } from '../reducers/blogReducer';
 import PropTypes from 'prop-types';
 
-const Blog = ({ blog, updateBlog, removeBlog, user }) => {
+const Blog = ({ blog, user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const dispatch = useDispatch();
 
   const ownedByUser = (user.username === blog.user.username);
 
@@ -16,15 +20,13 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const likeBlog = () => {
-    const newBlog = { ...blog, likes: (blog.likes + 1) };
-
-    updateBlog(blog.id, newBlog);
+  const handleLike = () => {
+    dispatch(likeBlog(blog.id));
   };
 
   const confirmRemoveBlog = () => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
-      removeBlog(blog.id);
+      dispatch(deleteBlog(blog.id));
     }
   };
 
@@ -34,7 +36,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
         <div>{blog.url}</div>
         <div>
           Likes: {blog.likes}
-          <button type="button" onClick={likeBlog}>like</button>
+          <button type="button" onClick={handleLike}>like</button>
         </div>
         {ownedByUser && (
           <button type="button" onClick={confirmRemoveBlog}>
@@ -71,8 +73,6 @@ Blog.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,

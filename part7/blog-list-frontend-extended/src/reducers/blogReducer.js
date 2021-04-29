@@ -33,10 +33,22 @@ const reducer = (state = initialState, action) => {
         blogs: [...state.blogs, action.payload],
       };
     }
-    case 'DELETE_BLOG':
-      return state; // to implement
-    case 'LIKE_BLOG':
-      return state; // to implement
+    case 'DELETE_BLOG': {
+      const id = action.payload.id;
+      return {
+        ...state,
+        blogs: state.blogs.filter((blog) => blog.id !== id)
+      };
+    }
+    case 'UPDATE_BLOG': {
+      const { id, updatedBlog } = action.payload;
+      const blogs = state.blogs.map((blog) => (blog.id !== id ? blog : updatedBlog));
+
+      return {
+        ...state,
+        blogs
+      };
+    }
     default:
       return state;
   }
@@ -75,6 +87,49 @@ export const addBlog = (blog) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Add blog unsuccessful: ${handleError(error)}`;
+      dispatch(showNotificationWithTimeout(message, 'failure'));
+    }
+  };
+};
+
+export const deleteBlog = (id) => {
+  return async (dispatch) => {
+    try {
+      await blogService.remove(id);
+
+      dispatch({
+        type: 'DELETE_BLOG',
+        payload: { id },
+      });
+
+      dispatch(showNotificationWithTimeout('Blog removed', 'success'));
+    } catch (error) {
+      const message = `Unable to remove blog: ${handleError(error)}`;
+      dispatch(showNotificationWithTimeout(message, 'failure'));
+    }
+  };
+};
+
+export const likeBlog = (id) => {
+
+  return async (dispatch, getState) => {
+    const state = getState();
+    const blogs = state.blogs.blogs;
+    const blogToLike = blogs.find((blog) => blog.id === id);
+    const likedBlog = { ...blogToLike, likes: blogToLike.likes + 1 };
+
+    try {
+      const response = await blogService.update(id, likedBlog);
+
+      dispatch({
+        type: 'UPDATE_BLOG',
+        payload: { id, updatedBlog: likedBlog },
+      });
+
+      const message = `Liked ${response.title} by ${response.author}`;
+      dispatch(showNotificationWithTimeout(message, 'success'));
+    } catch (error) {
+      const message = `Unable to like: ${handleError(error)}`;
       dispatch(showNotificationWithTimeout(message, 'failure'));
     }
   };

@@ -4,10 +4,16 @@ import AddBlogForm from './AddBlogForm';
 import Togglable from './Togglable';
 import { useSelector } from 'react-redux';
 
-const BlogList = ({ updateBlog, removeBlog, user }) => {
+const BlogList = ({ user }) => {
   const blogs = useSelector((state) => {
     return state.blogs.blogs.sort((a, b) => (b.likes || 0) - (a.likes || 0));
   });
+
+  const status = useSelector((state) => state.blogs.status);
+
+  if (status === 'failed') return <div>Error: Could not load blogs</div>;
+
+  if (status === 'loading') return <div>Loading...</div>;
 
   return (
     <div className="blog-list">
@@ -20,8 +26,6 @@ const BlogList = ({ updateBlog, removeBlog, user }) => {
           <Blog
             key={blog.id}
             blog={blog}
-            updateBlog={updateBlog}
-            removeBlog={removeBlog}
             user={user}
           />
         )}
