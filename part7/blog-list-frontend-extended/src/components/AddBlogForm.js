@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addBlog } from '../reducers/blogReducer';
 
-const AddBlogForm = ({ addBlog, toggleVisibility }) => {
+const AddBlogForm = ({ toggleVisibility }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,7 +19,7 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
       likes: 0,
     };
 
-    addBlog(blogObject);
+    dispatch(addBlog(blogObject));
 
     toggleVisibility && toggleVisibility();
 
@@ -63,10 +66,6 @@ const AddBlogForm = ({ addBlog, toggleVisibility }) => {
       </form>
     </div>
   );
-};
-
-AddBlogForm.propTypes = {
-  addBlog: PropTypes.func.isRequired,
 };
 
 export default AddBlogForm;

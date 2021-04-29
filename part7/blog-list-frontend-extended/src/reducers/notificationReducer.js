@@ -1,12 +1,17 @@
 const reducer = (state = null, action) => {
   switch (action.type) {
-    case 'SHOW_NOTIFICATION':
+    case 'SHOW_NOTIFICATION': {
+      const { message, type } = action.payload;
       return {
-        message: action.payload.message,
-        type: action.payload.type
+        message,
+        type
       };
+    }
     case 'HIDE_NOTIFICATION':
-      return null;
+      return {
+        message: null,
+        type: null
+      };
     default:
       return state;
   }
