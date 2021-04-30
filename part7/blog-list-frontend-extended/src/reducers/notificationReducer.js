@@ -1,4 +1,9 @@
-const reducer = (state = null, action) => {
+const initialState = {
+  message: null,
+  type: null
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SHOW_NOTIFICATION': {
       const { message, type } = action.payload;

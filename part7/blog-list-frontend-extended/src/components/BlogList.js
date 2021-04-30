@@ -4,12 +4,12 @@ import AddBlogForm from './AddBlogForm';
 import Togglable from './Togglable';
 import { useSelector } from 'react-redux';
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
   const blogs = useSelector((state) => {
     return state.blogs.blogs.sort((a, b) => (b.likes || 0) - (a.likes || 0));
   });
-
   const status = useSelector((state) => state.blogs.status);
+  const user = useSelector((state) => state.authentication.user);
 
   if (status === 'failed') return <div>Error: Could not load blogs</div>;
 
