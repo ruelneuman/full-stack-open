@@ -5,11 +5,15 @@ import { logOut } from '../reducers/authenticationReducer';
 const UserInfo = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.authentication.user);
+  const { user, isLoggedIn } = useSelector((state) => state.authentication);
 
   const handleLogout = () => {
     dispatch(logOut());
   };
+
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <div>

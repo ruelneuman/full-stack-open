@@ -66,7 +66,7 @@ export const initializeBlogs = () => {
         payload: blogs,
       });
     } catch (error) {
-      console.error(error);
+      handleError(error);
 
       dispatch({ type: 'INIT_BLOGS_ERROR' });
     }

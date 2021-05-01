@@ -10,20 +10,20 @@ const createInitialState = () => {
     const user = JSON.parse(loggedUserJSON);
     blogService.setToken(user.token);
 
-    return { user };
+    return { user, isLoggedIn: true };
   }
 
-  return { user: null };
+  return { user: null, isLoggedIn: false };
 };
 
 const reducer = (state = createInitialState(), action) => {
   switch (action.type) {
     case 'LOG_IN': {
       const user = action.payload.user;
-      return { user };
+      return { user, isLoggedIn: true };
     }
     case 'LOG_OUT': {
-      return { user: null };
+      return { user: null, isLoggedIn: false };
     }
     default:
       return state;

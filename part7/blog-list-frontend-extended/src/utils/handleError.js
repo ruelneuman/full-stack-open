@@ -9,7 +9,7 @@ const handleError = (error) => {
     console.error(error.request);
     return error.message;
   } else {
-    console.log('Error', error.message);
+    console.error('Error', error.message);
     return error.message;
   }
 };
