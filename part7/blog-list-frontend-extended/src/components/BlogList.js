@@ -1,7 +1,7 @@
 import React from 'react';
-import Blog from './Blog';
 import AddBlogForm from './AddBlogForm';
 import Togglable from './Togglable';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const BlogList = () => {
@@ -9,7 +9,6 @@ const BlogList = () => {
     return state.blogs.blogs.sort((a, b) => (b.likes || 0) - (a.likes || 0));
   });
   const status = useSelector((state) => state.blogs.status);
-  const user = useSelector((state) => state.authentication.user);
 
   if (status === 'failed') return <div>Error: Could not load blogs</div>;
 
@@ -22,12 +21,10 @@ const BlogList = () => {
         <AddBlogForm />
       </Togglable>
       <div className="blogs">
-        {blogs.map(blog =>
-          <Blog
-            key={blog.id}
-            blog={blog}
-            user={user}
-          />
+        {blogs.map((blog) =>
+          <Link to={`/blogs/${blog.id}`} key={blog.id}>
+            <div>{blog.title}</div>
+          </Link>
         )}
       </div>
     </div>

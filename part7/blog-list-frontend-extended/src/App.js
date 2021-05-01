@@ -6,6 +6,7 @@ import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import UserLoginInfo from './components/UserLoginInfo';
 import BlogList from './components/BlogList';
+import Blog from './components/Blog';
 import UserList from './components/UserList';
 import User from './components/User';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
@@ -30,8 +31,9 @@ const App = () => {
 
       <Switch>
         <UnauthenticatedRoute path="/login" component={LoginForm} />
-        <AuthenticatedRoute exact path="/users/:id" component={User} />
+        <AuthenticatedRoute exact path="/blogs/:id" component={Blog} />
         <AuthenticatedRoute path="/blogs" component={BlogList} />
+        <AuthenticatedRoute exact path="/users/:id" component={User} />
         <AuthenticatedRoute exact path="/users" component={UserList} />
         <Route>
           <Redirect to="/blogs" />
