@@ -4,12 +4,13 @@ import { initializeBlogs } from './reducers/blogReducer';
 import { initializeUsers } from './reducers/userReducer';
 import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
-import UserInfo from './components/UserInfo';
+import UserLoginInfo from './components/UserLoginInfo';
 import BlogList from './components/BlogList';
 import UserList from './components/UserList';
+import User from './components/User';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/UnauthenticatedRoute';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 const App = () => {
@@ -25,13 +26,16 @@ const App = () => {
   return (
     <>
       <Notification />
-      <UserInfo />
+      <UserLoginInfo />
 
       <Switch>
         <UnauthenticatedRoute path="/login" component={LoginForm} />
+        <AuthenticatedRoute exact path="/users/:id" component={User} />
         <AuthenticatedRoute path="/blogs" component={BlogList} />
-        <AuthenticatedRoute path="/users" component={UserList} />
-        <Redirect to="/blogs" />
+        <AuthenticatedRoute exact path="/users" component={UserList} />
+        <Route>
+          <Redirect to="/blogs" />
+        </Route>
       </Switch>
     </>
   );

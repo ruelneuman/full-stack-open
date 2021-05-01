@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/authenticationReducer';
 
-const UserInfo = () => {
+const UserLoginInfo = () => {
   const dispatch = useDispatch();
 
   const { user, isLoggedIn } = useSelector((state) => state.authentication);
@@ -23,4 +23,4 @@ const UserInfo = () => {
   );
 };
 
-export default UserInfo;
+export default UserLoginInfo;
