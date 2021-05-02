@@ -14,9 +14,7 @@ const Blog = () => {
     });
   });
 
-  const user = useSelector((state) => {
-    return state.authentication.user;
-  });
+  const { user, isLoggedIn } = useSelector((state) => state.authentication);
 
   const handleLike = () => {
     dispatch(likeBlog(blog.id));
@@ -28,25 +26,27 @@ const Blog = () => {
     }
   };
 
-  if (!blog || !user) return null;
-
-  const ownedByUser = (user.username === blog.user.username);
+  if (!blog) return null;
 
   return (
     <div className="blog">
       <h1>
         {blog.title} by {blog.author}
       </h1>
-      <a href={blog.url.startsWith('http') ? blog.url : `http://${blog.url}`}>
+      <a
+        href={blog.url.startsWith('http') ? blog.url : `http://${blog.url}`}
+        target="_blank"
+        rel="noreferrer"
+      >
         {blog.url}
       </a>
       <div>
         {blog.likes} likes
-        <button type="button" onClick={handleLike}>like</button>
+        {isLoggedIn && <button type="button" onClick={handleLike}>like</button>}
       </div>
       <div>
-        Added by {user.name}
-        {ownedByUser && (
+        Added by {blog.user.name}
+        {user && user.username === blog.user.username && (
           <button type="button" onClick={confirmRemoveBlog}>
             Remove
           </button>

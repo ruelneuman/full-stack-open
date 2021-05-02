@@ -8,7 +8,10 @@ const BlogList = () => {
   const blogs = useSelector((state) => {
     return state.blogs.blogs.sort((a, b) => (b.likes || 0) - (a.likes || 0));
   });
+
   const status = useSelector((state) => state.blogs.status);
+
+  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
 
   if (status === 'failed') return <div>Error: Could not load blogs</div>;
 
@@ -17,9 +20,9 @@ const BlogList = () => {
   return (
     <div className="blog-list">
       <h1>Blogs</h1>
-      <Togglable buttonLabel="Add blog" >
+      {isLoggedIn && <Togglable buttonLabel="Add blog" >
         <AddBlogForm />
-      </Togglable>
+      </Togglable>}
       <div className="blogs">
         {blogs.map((blog) =>
           <Link to={`/blogs/${blog.id}`} key={blog.id}>
