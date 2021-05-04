@@ -49,6 +49,20 @@ const reducer = (state = initialState, action) => {
         blogs
       };
     }
+    case 'NEW_COMMENT': {
+      const { id, comment } = action.payload;
+
+      const blogToUpdate = state.blogs.find((blog) => blog.id === id);
+
+      const updatedBlog = {
+        ...blogToUpdate,
+        comments: [...blogToUpdate.comments, comment]
+      };
+
+      const updatedblogs = state.blogs.map((blog) => blog.id !== id ? blog : updatedBlog);
+
+      return { ...state, blogs: updatedblogs };
+    }
     default:
       return state;
   }
@@ -130,6 +144,25 @@ export const likeBlog = (id) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Unable to like: ${handleError(error)}`;
+      dispatch(showNotificationWithTimeout(message, 'failure'));
+    }
+  };
+};
+
+export const addComment = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      await blogService.comment(id, comment);
+
+      dispatch({
+        type: 'NEW_COMMENT',
+        payload: { id, comment },
+      });
+
+      const message = 'Posted comment';
+      dispatch(showNotificationWithTimeout(message, 'success'));
+    } catch (error) {
+      const message = `Unable to comment: ${handleError(error)}`;
       dispatch(showNotificationWithTimeout(message, 'failure'));
     }
   };

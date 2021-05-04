@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { deleteBlog, likeBlog } from '../reducers/blogReducer';
+import Comments from './Comments';
 
 const Blog = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const Blog = () => {
           </button>
         )}
       </div>
-
+      <Comments blog={blog} />
     </div>
   );
 };
