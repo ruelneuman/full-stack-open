@@ -1,18 +1,25 @@
 import React from 'react';
-import '../index.css';
 import { useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  alert: {
+    margin: theme.spacing(1),
+  },
+}));
 
 const Notification = () => {
+  const classes = useStyles();
+
   const notification = useSelector((state) => state.notification);
 
-  if (!notification || !notification.message ) {
+  if (!notification || !notification.message) {
     return null;
   }
 
-  const className = `notification notification--${notification.type}`;
-
   return (
-    <div className={className}>{notification.message}</div>
+    <Alert className={classes.alert} severity={notification.type}>{notification.message}</Alert>
   );
 };
 

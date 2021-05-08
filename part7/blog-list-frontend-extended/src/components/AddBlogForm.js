@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import { addBlog } from '../reducers/blogReducer';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    '& > *': {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+  },
+}));
 
 const AddBlogForm = ({ toggleVisibility }) => {
+  const classes = useStyles();
+
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -31,38 +45,29 @@ const AddBlogForm = ({ toggleVisibility }) => {
   return (
     <div>
       <h2>Add New Blog</h2>
-      <form onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="title-input">title:</label>
-          <input
-            type="text"
+          <TextField
+            label="title"
             value={title}
-            name="title-input"
-            id='title-input'
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          <label htmlFor="author-input">author:</label>
-          <input
-            type="text"
+          <TextField
+            label="author"
             value={author}
-            name="author-input"
-            id="author-input"
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          <label htmlFor="url-input">url:</label>
-          <input
-            type="text"
+          <TextField
+            label="url"
             value={url}
-            name="url-input"
-            id="url-input"
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="contained" color="primary">Submit</Button>
       </form>
     </div>
   );

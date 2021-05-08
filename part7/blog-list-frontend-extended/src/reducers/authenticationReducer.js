@@ -50,7 +50,7 @@ export const logIn = (user) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Login unsuccessful: ${handleError(error)}`;
-      dispatch(showNotificationWithTimeout(message, 'failure'));
+      dispatch(showNotificationWithTimeout(message, 'error'));
     }
   };
 };

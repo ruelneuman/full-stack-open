@@ -1,13 +1,25 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { deleteBlog, likeBlog } from '../reducers/blogReducer';
 import Comments from './Comments';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    marginLeft: theme.spacing(1)
+  },
+}));
 
 const Blog = () => {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
 
   const id = useParams().id;
+  const history = useHistory();
 
   const blog = useSelector((state) => {
     return state.blogs.blogs.find((blog) => {
@@ -24,33 +36,37 @@ const Blog = () => {
   const confirmRemoveBlog = () => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
       dispatch(deleteBlog(blog.id));
+      history.push('/');
     }
   };
 
   if (!blog) return null;
 
   return (
-    <div className="blog">
+    <div>
       <h1>
         {blog.title} by {blog.author}
       </h1>
-      <a
+      <Link
         href={blog.url.startsWith('http') ? blog.url : `http://${blog.url}`}
         target="_blank"
         rel="noreferrer"
       >
         {blog.url}
-      </a>
+      </Link>
       <div>
         {blog.likes} likes
-        {isLoggedIn && <button type="button" onClick={handleLike}>like</button>}
+        {isLoggedIn &&
+          <Button className={classes.button} color="primary" size="small" onClick={handleLike}>
+            like
+          </Button>}
       </div>
       <div>
         Added by {blog.user.name}
         {user && user.username === blog.user.username && (
-          <button type="button" onClick={confirmRemoveBlog}>
+          <Button className={classes.button} color="secondary" size="small" onClick={confirmRemoveBlog}>
             Remove
-          </button>
+          </Button>
         )}
       </div>
       <Comments blog={blog} />

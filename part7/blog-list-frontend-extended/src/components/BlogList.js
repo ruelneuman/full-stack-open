@@ -1,8 +1,10 @@
 import React from 'react';
-import AddBlogForm from './AddBlogForm';
-import Togglable from './Togglable';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AddBlogForm from './AddBlogForm';
+import Togglable from './Togglable';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const BlogList = () => {
   const blogs = useSelector((state) => {
@@ -18,18 +20,20 @@ const BlogList = () => {
   if (status === 'loading') return <div>Loading...</div>;
 
   return (
-    <div className="blog-list">
+    <div>
       <h1>Blogs</h1>
       {isLoggedIn && <Togglable buttonLabel="Add blog" >
         <AddBlogForm />
       </Togglable>}
-      <div className="blogs">
-        {blogs.map((blog) =>
-          <Link to={`/blogs/${blog.id}`} key={blog.id}>
-            <div>{blog.title}</div>
-          </Link>
-        )}
-      </div>
+      <List>
+        {blogs.map((blog) => {
+          return (
+            <ListItem button component={Link} to={`/blogs/${blog.id}`} key={blog.id}>
+              {blog.title}
+            </ListItem>
+          );
+        })}
+      </List>
     </div>
   );
 };

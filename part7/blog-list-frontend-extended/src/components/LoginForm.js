@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../reducers/authenticationReducer';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    '& > *': {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+  },
+}));
 
 const LoginForm = () => {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -21,26 +35,25 @@ const LoginForm = () => {
   return (
     <div>
       <h1>Log in to Application</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">username:</label>
-          <input
-            type="text"
+          <TextField
+            label="username"
             value={username}
-            name="username-input"
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password">password:</label>
-          <input
-            type="password"
+          <TextField
+            label="password"
             value={password}
-            name="password-input"
+            type="password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">Log in</button>
+        <Button type="submit" variant="contained" color="primary">
+          Log in
+        </Button>
       </form>
     </div>
   );

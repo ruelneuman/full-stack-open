@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const User = () => {
   const id = useParams().id;
@@ -19,11 +21,11 @@ const User = () => {
     <div>
       <h1>{user.name}</h1>
       <h2>Blogs Added:</h2>
-      <ul>
+      <List>
         {user.blogs.map((blog) => {
-          return <li key={blog.id}>{blog.title}</li>;
+          return <ListItem key={blog.id}>{blog.title}</ListItem>;
         })}
-      </ul>
+      </List>
     </div>
   );
 };

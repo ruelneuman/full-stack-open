@@ -101,7 +101,7 @@ export const addBlog = (blog) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Add blog unsuccessful: ${handleError(error)}`;
-      dispatch(showNotificationWithTimeout(message, 'failure'));
+      dispatch(showNotificationWithTimeout(message, 'error'));
     }
   };
 };
@@ -119,7 +119,7 @@ export const deleteBlog = (id) => {
       dispatch(showNotificationWithTimeout('Blog removed', 'success'));
     } catch (error) {
       const message = `Unable to remove blog: ${handleError(error)}`;
-      dispatch(showNotificationWithTimeout(message, 'failure'));
+      dispatch(showNotificationWithTimeout(message, 'error'));
     }
   };
 };
@@ -144,7 +144,7 @@ export const likeBlog = (id) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Unable to like: ${handleError(error)}`;
-      dispatch(showNotificationWithTimeout(message, 'failure'));
+      dispatch(showNotificationWithTimeout(message, 'error'));
     }
   };
 };
@@ -163,7 +163,7 @@ export const addComment = (id, comment) => {
       dispatch(showNotificationWithTimeout(message, 'success'));
     } catch (error) {
       const message = `Unable to comment: ${handleError(error)}`;
-      dispatch(showNotificationWithTimeout(message, 'failure'));
+      dispatch(showNotificationWithTimeout(message, 'error'));
     }
   };
 };
