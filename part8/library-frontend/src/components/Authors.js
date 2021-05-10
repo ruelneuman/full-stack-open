@@ -6,17 +6,18 @@ const Authors = (props) => {
   if (!props.show) {
     return null;
   }
-  const result = useQuery(ALL_AUTHORS);
 
-  if (result.loading) {
+  const { data, loading, error } = useQuery(ALL_AUTHORS);
+
+  if (loading) {
     return <div>loading...</div>;
   }
 
-  if (result.error) {
+  if (error) {
     return <div>Error: Could not load authors</div>;
   }
 
-  const authors = result.data.allAuthors;
+  const authors = data.allAuthors;
 
   return (
     <div>

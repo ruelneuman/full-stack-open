@@ -1,11 +1,23 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { ALL_BOOKS } from '../queries';
 
 const Books = (props) => {
   if (!props.show) {
     return null;
   }
 
-  const books = [];
+  const { data, loading, error } = useQuery(ALL_BOOKS);
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: Could not load books</div>;
+  }
+
+  const books = data.allBooks;
 
   return (
     <div>
@@ -22,11 +34,11 @@ const Books = (props) => {
               published
             </th>
           </tr>
-          {books.map(a =>
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author}</td>
-              <td>{a.published}</td>
+          {books.map((book) =>
+            <tr key={book.title}>
+              <td>{book.title}</td>
+              <td>{book.author}</td>
+              <td>{book.published}</td>
             </tr>
           )}
         </tbody>
