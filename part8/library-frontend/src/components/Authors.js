@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { ALL_AUTHORS } from '../queries';
+import BirthYearForm from './BirthYearForm';
 
 const Authors = (props) => {
   if (!props.show) {
@@ -43,6 +44,7 @@ const Authors = (props) => {
         </tbody>
       </table>
 
+      <BirthYearForm />
     </div>
   );
 };
