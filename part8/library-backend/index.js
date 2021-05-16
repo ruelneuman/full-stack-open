@@ -51,34 +51,28 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => Book.collection.countDocuments(),
-    authorCount: () => Author.collection.countDocuments(),
-    allBooks: (root, { author, genre }) => {
-      if (!author && !genre) return Book.find({}).populate('author');
+    bookCount: () => Book.countDocuments(),
+    authorCount: () => Author.countDocuments(),
+    allBooks: async (root, args) => {
+      let query = {};
 
-      // IMPLEMENT FILTER LIKE BELOW, BUT WITH MONGODB:
-      // const filteredBooks = books.filter((book) => {
-      //   if (author && book.author !== author) return false;
+      if (args.author) {
+        const author = await Author.findOne({ name: args.author });
+        query.author = author?._id;
+      }
 
-      //   if (genre && !book.genres.includes(genre)) return false;
+      if (args.genre) {
+        query.genres = args.genre;
+      }
 
-      //   return true;
-      // });
-
-      // return filteredBooks;
+      return Book.find(query).populate('author');
     },
     allAuthors: () => Author.find({}),
   },
   Author: {
-    // IMPLEMENT TO WORK WITH DB:
-    // bookCount: (root) => {
-    //   const bookCount = books.reduce((count, book) => {
-    //     return book.author === root.name
-    //       ? count + 1
-    //       : count;
-    //   }, 0);
-    //   return bookCount;
-    // }
+    bookCount: (root) => {
+      return Book.countDocuments({ author: root.id });
+    }
   },
   Mutation: {
     addBook: async (root, args) => {
@@ -95,22 +89,16 @@ const resolvers = {
 
       return await book.populate('author').execPopulate();
     },
-    // IMPLEMENT TO WORK WITH DB:
-    // editAuthor: (root, { name, setBornTo }) => {
-    //   const author = authors.find((author) => author.name === name);
+    editAuthor: async (root, { name, setBornTo }) => {
+      const author = await Author.findOne({ name });
 
-    //   if (!author) return null;
+      if (!author) return null;
 
-    //   const updatedAuthor = { ...author, born: setBornTo };
+      author.born = setBornTo;
+      await author.save();
 
-    //   authors = authors.map((author) => {
-    //     return author.id !== updatedAuthor.id
-    //       ? author
-    //       : updatedAuthor;
-    //   });
-
-    //   return updatedAuthor;
-    // },
+      return author;
+    },
   }
 };
 
