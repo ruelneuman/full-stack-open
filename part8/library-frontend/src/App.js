@@ -19,9 +19,9 @@ const App = () => {
   return (
     <div>
       <div>
-        <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('add')} disabled={!token}>add book</button>
+        <button onClick={() => setPage('authors')}>Authors</button>
+        <button onClick={() => setPage('books')}>Books</button>
+        <button onClick={() => setPage('add')} disabled={!token}>Add Book</button>
         {token
           ? <button onClick={handleLogout}>Log Out</button>
           : <button onClick={() => setPage('login')}>Log In</button>}
