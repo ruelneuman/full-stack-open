@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const ALL_AUTHORS = gql`
-  query allAuthors{
+  query allAuthors {
     allAuthors  {
       name
       born
@@ -12,7 +12,7 @@ export const ALL_AUTHORS = gql`
 `;
 
 export const ALL_BOOKS = gql`
-  query allBooks{
+  query allBooks {
     allBooks  {
       title
       author {
@@ -84,4 +84,14 @@ mutation login(
     value
   }
 }
+`;
+
+export const ME = gql`
+  query me {
+    me  {
+      username
+      favoriteGenre
+      id
+    }
+  }
 `;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { ALL_BOOKS } from '../queries';
+import BookTable from './BookTable';
 
 const Books = (props) => {
   if (!props.show) {
@@ -18,7 +19,12 @@ const Books = (props) => {
     return <div>Error: Could not load books</div>;
   }
 
-  const books = data.allBooks;
+  const books = data.allBooks.filter((book) => {
+    if (filter === 'all') return true;
+
+    return book.genres.includes(filter);
+  });
+
   const genres = [...(new Set(data.allBooks.flatMap((book) => book.genres)))];
   const options = ['all'].concat(genres);
 
@@ -35,33 +41,7 @@ const Books = (props) => {
           );
         })}
       </select>
-
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th>
-              author
-            </th>
-            <th>
-              published
-            </th>
-          </tr>
-          {books
-            .filter((book) => {
-              if (filter === 'all') return true;
-
-              return book.genres.includes(filter);
-            })
-            .map((book) =>
-              <tr key={book.title}>
-                <td>{book.title}</td>
-                <td>{book.author.name}</td>
-                <td>{book.published}</td>
-              </tr>
-            )}
-        </tbody>
-      </table>
+      <BookTable books={books} />
     </div>
   );
 };
