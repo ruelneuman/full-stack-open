@@ -1,5 +1,5 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { ALL_BOOKS, ME } from '../queries';
 import BookTable from './BookTable';
 
@@ -8,23 +8,35 @@ const Recommendations = (props) => {
     return null;
   }
 
-  const allBooksResult = useQuery(ALL_BOOKS);
-  const meResult = useQuery(ME);
+  const [books, setBooks] = useState([]);
+  const [favoriteGenre, setFavoriteGenre] = useState(null);
 
-  if (allBooksResult.loading || meResult.loading) {
+  const [getBooks, booksResult] = useLazyQuery(ALL_BOOKS);
+
+  const meResult = useQuery(ME, {
+    fetchPolicy: 'cache-and-network'
+  });
+
+  useEffect(() => {
+    if (meResult.data?.me?.favoriteGenre) {
+      setFavoriteGenre(meResult.data.me.favoriteGenre);
+      getBooks({ variables: { genre: meResult.data.me.favoriteGenre } });
+    }
+  }, [meResult]);
+
+  useEffect(() => {
+    if (booksResult.data?.allBooks) {
+      setBooks(booksResult.data.allBooks);
+    }
+  }, [booksResult]);
+
+  if (!booksResult.called || booksResult.loading || meResult.loading) {
     return <div>loading...</div>;
   }
 
-  if (allBooksResult.error || meResult.loading) {
+  if (booksResult.error || meResult.error) {
     return <div>Error: Could not load books</div>;
   }
-
-  const favoriteGenre = meResult.data.me?.favoriteGenre;
-
-  const books = allBooksResult.data.allBooks.filter((book) => {
-    return book.genres.includes(favoriteGenre);
-  });
-
 
   return (
     <div>

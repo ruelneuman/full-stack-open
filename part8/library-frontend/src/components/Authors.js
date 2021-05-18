@@ -28,10 +28,10 @@ const Authors = (props) => {
           <tr>
             <th></th>
             <th>
-              born
+              Born
             </th>
             <th>
-              books
+              Books
             </th>
           </tr>
           {authors.map((author) =>

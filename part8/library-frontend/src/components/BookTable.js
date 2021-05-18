@@ -7,10 +7,10 @@ const BookTable = ({ books }) => {
         <tr>
           <th></th>
           <th>
-            author
+            Author
           </th>
           <th>
-            published
+            Published
           </th>
         </tr>
         {books.map((book) =>

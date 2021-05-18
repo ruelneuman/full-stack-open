@@ -41,7 +41,7 @@ const BirthYearForm = ({ authors }) => {
           })}
         </select>
         <div>
-          born
+          Born
           <input
             type='number'
             value={born}
