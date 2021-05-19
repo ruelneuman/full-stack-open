@@ -1,45 +1,36 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { ALL_BOOKS } from '../queries';
 import BookTable from './BookTable';
 
-const Books = (props) => {
-  if (!props.show) {
-    return null;
-  }
-
+const Books = () => {
   const [filter, setFilter] = useState('all');
-  const options = useRef(null);
 
-  const optionsResults = useQuery(ALL_BOOKS);
+  const { data: booksData, loading: booksLoading, error: booksError } = useQuery(ALL_BOOKS);
 
-  const { data, loading, error } = useQuery(ALL_BOOKS, {
+  const genres = [...(new Set(booksData?.allBooks.flatMap((book) => book.genres)))];
+  const options = ['all'].concat(genres);
+
+  const { data: filteredBooksData, loading: filteredBooksLoading, error: filteredBooksError } = useQuery(ALL_BOOKS, {
     variables: { genre: filter !== 'all' ? filter : null }
   });
 
-  useEffect(() => {
-    if (optionsResults?.data?.allBooks) {
-      const genres = [...(new Set(optionsResults.data.allBooks.flatMap((book) => book.genres)))];
-      options.current = ['all'].concat(genres);
-    }
-  }, [optionsResults]);
+  const books = filteredBooksData?.allBooks;
 
-  if (loading) {
+  if (booksLoading || filteredBooksLoading) {
     return <div>loading...</div>;
   }
 
-  if (error) {
+  if (booksError || filteredBooksError) {
     return <div>Error: Could not load books</div>;
   }
-
-  const books = data.allBooks;
 
   return (
     <div>
       <h2>Books</h2>
       <div>show:</div>
       <select value={filter} onChange={({ target }) => setFilter(target.value)}>
-        {options.current.map((option) => {
+        {options.map((option) => {
           return (
             <option key={option} value={option}>
               {option}

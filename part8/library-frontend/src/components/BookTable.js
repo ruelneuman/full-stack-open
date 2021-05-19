@@ -1,6 +1,10 @@
 import React from 'react';
 
 const BookTable = ({ books }) => {
+  if (!books || books.length <= 0) {
+    return <div>No books found</div>;
+  }
+
   return (
     <table>
       <tbody>
