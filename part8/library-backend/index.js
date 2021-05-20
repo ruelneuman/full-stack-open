@@ -1,10 +1,11 @@
 const { MONGODB_URI, JWT_SECRET } = require('./utils/config');
-const { ApolloServer, UserInputError, AuthenticationError, gql } = require('apollo-server');
+const { ApolloServer, UserInputError, AuthenticationError, PubSub, gql } = require('apollo-server');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Book = require('./models/book');
 const Author = require('./models/author');
 const User = require('./models/user');
+const pubsub = new PubSub();
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(() => {
@@ -65,6 +66,9 @@ const typeDefs = gql`
       username: String!
       password: String!
     ): Token
+  }
+  type Subscription {
+    bookAdded: Book!
   }
 `;
 
@@ -128,7 +132,11 @@ const resolvers = {
         });
       }
 
-      return book.populate('author').execPopulate();
+      const savedBook = await book.populate('author').execPopulate();
+
+      pubsub.publish('BOOK_ADDED', { bookAdded: savedBook });
+
+      return savedBook;
     },
     editAuthor: async (root, args, { currentUser }) => {
       if (!currentUser) {
@@ -178,7 +186,12 @@ const resolvers = {
 
       return { value: jwt.sign(userForToken, JWT_SECRET) };
     },
-  }
+  },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
+    },
+  },
 };
 
 const server = new ApolloServer({
@@ -196,6 +209,7 @@ const server = new ApolloServer({
   }
 });
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`);
+  console.log(`Subscriptions ready at ${subscriptionsUrl}`);
 });
