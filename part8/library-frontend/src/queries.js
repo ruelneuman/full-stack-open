@@ -1,28 +1,52 @@
 import { gql } from '@apollo/client';
 
-export const ALL_AUTHORS = gql`
-  query allAuthors {
-    allAuthors  {
+const BOOK_DETAILS = gql`
+  fragment BookDetails on Book {
+    title
+    published
+    genres
+    author {
       name
       born
       bookCount
       id
     }
+    id
   }
+`;
+
+const AUTHOR_DETAILS = gql`
+  fragment AuthorDetails on Author {
+    name
+    born
+    bookCount
+    id
+  }
+`;
+
+export const ALL_AUTHORS = gql`
+  query allAuthors {
+    allAuthors  {
+      ...AuthorDetails
+    }
+  }
+  ${AUTHOR_DETAILS}
 `;
 
 export const ALL_BOOKS = gql`
   query allBooks($genre: String, $author: String) {
     allBooks(genre: $genre, author: $author)  {
-      title
-      author {
-        name
-        born
-        bookCount
-        id
-      }
-      published
-      genres
+      ...BookDetails
+    }
+  }
+  ${BOOK_DETAILS}
+`;
+
+export const ME = gql`
+  query me {
+    me  {
+      username
+      favoriteGenre
       id
     }
   }
@@ -41,18 +65,10 @@ export const ADD_BOOK = gql`
       published: $published
       genres: $genres
     ) {
-      title
-      author {
-        name
-        born
-        bookCount
-        id
-      }
-      published
-      genres
-      id
+      ...BookDetails
     }
   }
+  ${BOOK_DETAILS}
 `;
 
 export const EDIT_AUTHOR = gql`
@@ -64,12 +80,10 @@ export const EDIT_AUTHOR = gql`
       name: $name
       setBornTo: $born
     ) {
-      name
-      born
-      bookCount
-      id
+      ...AuthorDetails
     }
   }
+  ${AUTHOR_DETAILS}
 `;
 
 export const LOG_IN = gql`
@@ -86,12 +100,11 @@ mutation login(
 }
 `;
 
-export const ME = gql`
-  query me {
-    me  {
-      username
-      favoriteGenre
-      id
+export const BOOK_ADDED = gql`
+  subscription bookAdded {
+    bookAdded  {
+      ...BookDetails
     }
   }
+  ${BOOK_DETAILS}
 `;
