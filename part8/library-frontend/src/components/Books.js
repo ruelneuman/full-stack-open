@@ -12,7 +12,8 @@ const Books = () => {
   const options = ['all'].concat(genres);
 
   const { data: filteredBooksData, loading: filteredBooksLoading, error: filteredBooksError } = useQuery(ALL_BOOKS, {
-    variables: { genre: filter !== 'all' ? filter : null }
+    variables: { genre: filter !== 'all' ? filter : null },
+    fetchPolicy: 'cache-and-network',
   });
 
   const books = filteredBooksData?.allBooks;

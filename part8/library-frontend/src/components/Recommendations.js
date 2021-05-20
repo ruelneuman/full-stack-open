@@ -13,6 +13,7 @@ const Recommendations = () => {
   const { data: booksData, loading: booksLoading, error: booksError } = useQuery(ALL_BOOKS, {
     variables: { genre },
     skip: !genre,
+    fetchPolicy: 'cache-and-network',
   });
 
   if (booksLoading || meLoading) {
