@@ -1,6 +1,7 @@
 const { MONGODB_URI, JWT_SECRET } = require('./utils/config');
 const { ApolloServer, UserInputError, AuthenticationError, PubSub, gql } = require('apollo-server');
 const mongoose = require('mongoose');
+const DataLoader = require('dataloader');
 const jwt = require('jsonwebtoken');
 const Book = require('./models/book');
 const Author = require('./models/author');
@@ -96,8 +97,8 @@ const resolvers = {
     }
   },
   Author: {
-    bookCount: (root) => {
-      return Book.countDocuments({ author: root.id });
+    bookCount: (root, args, { loaders }) => {
+      return loaders.bookCount.load(root.id);
     }
   },
   Mutation: {
@@ -194,17 +195,46 @@ const resolvers = {
   },
 };
 
+const getUser = async (req) => {
+  const auth = req ? req.headers.authorization : null;
+  if (auth && auth.toLowerCase().startsWith('bearer ')) {
+    const decodedToken = jwt.verify(
+      auth.substring(7), JWT_SECRET
+    );
+    const user = await User.findById(decodedToken.id);
+
+    return user;
+  }
+
+  return null;
+};
+
+const batchBookCounts = async (authorIds) => {
+  const books = await Book.find({});
+
+  const bookCounts = books.reduce((bookCounts, book) => {
+    const authorId = book.author;
+
+    bookCounts[authorId] = (bookCounts[authorId] || 0) + 1;
+
+    return bookCounts;
+  }, {});
+
+  return authorIds.map((authorId) => bookCounts[authorId] || 0);
+};
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
-    const auth = req ? req.headers.authorization : null;
-    if (auth && auth.toLowerCase().startsWith('bearer ')) {
-      const decodedToken = jwt.verify(
-        auth.substring(7), JWT_SECRET
-      );
-      const currentUser = await User.findById(decodedToken.id);
-      return { currentUser };
+    if (req) {
+      const currentUser = await getUser(req);
+      return {
+        currentUser,
+        loaders: {
+          bookCount: new DataLoader((AuthorId) => batchBookCounts(AuthorId)),
+        },
+      };
     }
   }
 });
