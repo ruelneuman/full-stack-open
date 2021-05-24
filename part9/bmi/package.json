@@ -1,0 +1,17 @@
+{
+  "name": "bmi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "calculateBmi": "ts-node bmiCalculator.ts"
+  },
+  "author": "Ruel Neuman",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.6.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  }
+}
