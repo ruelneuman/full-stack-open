@@ -17,7 +17,7 @@ const calculateExercises = (dailyExerciseHours: number[], target: number): Resul
 
   let rating;
   let ratingDescription;
-  
+
   if (success) {
     rating = 3;
     ratingDescription = 'You met your exercise target!'
@@ -41,4 +41,30 @@ const calculateExercises = (dailyExerciseHours: number[], target: number): Resul
   };
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+interface exerciseArgs {
+  dailyExerciseHours: number[];
+  target: number;
+}
+
+const parseExerciseArguments = (args: Array<string>): exerciseArgs => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  const target = Number(args[2]);
+  const dailyExerciseHours = args.slice(3).map((arg) => Number(arg));
+
+  if (isNaN(target) || dailyExerciseHours.some((arg) => isNaN(Number(arg)))) {
+    throw new Error('Not all provided values were numbers');
+  }
+
+  return {
+    dailyExerciseHours,
+    target,
+  };
+}
+
+try {
+  const { dailyExerciseHours, target } = parseExerciseArguments(process.argv);
+  console.log(calculateExercises(dailyExerciseHours, target));
+} catch (error) {
+  console.log("An error has occured: ", error.message);
+}
