@@ -1,5 +1,5 @@
 const calculateBmi = (height: number, mass: number): string => {
-  const bmi: number = mass / (height / 100) ** 2;
+  const bmi = mass / (height / 100) ** 2;
 
   if (bmi < 15) return 'Very severly underweight';
 
