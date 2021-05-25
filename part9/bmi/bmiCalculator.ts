@@ -1,4 +1,4 @@
-const calculateBmi = (height: number, mass: number): string => {
+export const calculateBmi = (height: number, mass: number): string => {
   const bmi = mass / (height / 100) ** 2;
 
   if (bmi < 15) return 'Very severly underweight';
@@ -22,7 +22,7 @@ const calculateBmi = (height: number, mass: number): string => {
 
 interface bmiArgs {
   height: number;
-  mass: number;
+  weight: number;
 }
 
 const parseBmiArguments = (args: Array<string>): bmiArgs => {
@@ -35,13 +35,13 @@ const parseBmiArguments = (args: Array<string>): bmiArgs => {
 
   return {
     height: Number(args[2]),
-    mass: Number(args[3])
+    weight: Number(args[3])
   }
 }
 
 try {
-  const { height, mass } = parseBmiArguments(process.argv);
-  console.log(calculateBmi(height, mass));
+  const { height, weight } = parseBmiArguments(process.argv);
+  console.log(calculateBmi(height, weight));
 } catch (error) {
   console.log("An error has occured: ", error.message);
 }
