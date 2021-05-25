@@ -17,8 +17,8 @@ export const calculateBmi = (height: number, mass: number): string => {
 
   if (bmi >= 40) return 'Obese Class III (Very severely obese)';
 
-  return 'Error: Unable to calculate BMI'
-}
+  return 'Error: Unable to calculate BMI';
+};
 
 interface bmiArgs {
   height: number;
@@ -36,12 +36,16 @@ const parseBmiArguments = (args: Array<string>): bmiArgs => {
   return {
     height: Number(args[2]),
     weight: Number(args[3])
-  }
-}
+  };
+};
 
-try {
-  const { height, weight } = parseBmiArguments(process.argv);
-  console.log(calculateBmi(height, weight));
-} catch (error) {
-  console.log("An error has occured: ", error.message);
+if (require.main === module) {
+  try {
+    const { height, weight } = parseBmiArguments(process.argv);
+    console.log(calculateBmi(height, weight));
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("An error has occured: ", error.message);
+    }
+  }
 }

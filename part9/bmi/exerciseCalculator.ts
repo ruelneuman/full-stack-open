@@ -20,13 +20,13 @@ const calculateExercises = (dailyExerciseHours: number[], target: number): Resul
 
   if (success) {
     rating = 3;
-    ratingDescription = 'You met your exercise target!'
+    ratingDescription = 'You met your exercise target!';
   } else if (average > 0.5 * target) {
     rating = 2;
-    ratingDescription = "You are 50% there"
+    ratingDescription = "You are 50% there";
   } else {
     rating = 1;
-    ratingDescription = "You can do better"
+    ratingDescription = "You can do better";
   }
 
 
@@ -39,7 +39,7 @@ const calculateExercises = (dailyExerciseHours: number[], target: number): Resul
     target,
     average,
   };
-}
+};
 
 interface exerciseArgs {
   dailyExerciseHours: number[];
@@ -60,11 +60,15 @@ const parseExerciseArguments = (args: Array<string>): exerciseArgs => {
     dailyExerciseHours,
     target,
   };
-}
+};
 
-try {
-  const { dailyExerciseHours, target } = parseExerciseArguments(process.argv);
-  console.log(calculateExercises(dailyExerciseHours, target));
-} catch (error) {
-  console.log("An error has occured: ", error.message);
+if (require.main === module) {
+  try {
+    const { dailyExerciseHours, target } = parseExerciseArguments(process.argv);
+    console.log(calculateExercises(dailyExerciseHours, target));
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("An error has occured: ", error.message);
+    }
+  }
 }
