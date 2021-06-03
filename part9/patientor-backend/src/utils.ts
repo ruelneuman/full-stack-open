@@ -31,23 +31,24 @@ const parseDate = (date: unknown): string => {
 const parseGender = (gender: unknown): Gender => {
   if (!gender || !isGender(gender)) {
     throw new Error('Incorrect or missing gender: ' + gender);
-}
-return gender;
+  }
+  return gender;
 };
 
 type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown };
 
 const toNewPatient = ({ name, dateOfBirth, ssn, gender, occupation }: Fields): NewPatient => {
 
-  const newEntry: NewPatient = {
+  const newPatient: NewPatient = {
     name: parseToString(name, 'name'),
     dateOfBirth: parseDate(dateOfBirth),
     ssn: parseToString(ssn, 'SSN'),
     gender: parseGender(gender),
-    occupation: parseToString(occupation, 'occupation')
+    occupation: parseToString(occupation, 'occupation'),
+    entries: [], 
   };
 
-  return newEntry;
+  return newPatient;
 };
 
 export default toNewPatient;
