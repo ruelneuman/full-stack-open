@@ -9,6 +9,7 @@ import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue } from "../state";
+import { addPatient } from "../state/reducer";
 
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -29,7 +30,7 @@ const PatientListPage = () => {
         `${apiBaseUrl}/patients`,
         values
       );
-      dispatch({ type: "ADD_PATIENT", payload: newPatient });
+      dispatch(addPatient(newPatient));
       closeModal();
     } catch (e) {
       console.error(e.response?.data || 'Unknown Error');

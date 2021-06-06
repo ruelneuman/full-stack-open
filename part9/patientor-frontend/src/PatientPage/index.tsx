@@ -6,6 +6,7 @@ import { Container, Icon } from "semantic-ui-react";
 import { Patient, Gender } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue } from "../state";
+import { addPatient } from "../state/reducer";
 
 const PatientPage = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -24,7 +25,7 @@ const PatientPage = () => {
     const fetchPatient = async () => {
       try {
        const { data: patientFromApi } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
-       dispatch({ type: "ADD_PATIENT", payload: patientFromApi });
+       dispatch(addPatient(patientFromApi));
       } catch (error) {
         console.error(error);
       }
@@ -33,7 +34,7 @@ const PatientPage = () => {
     if (!patient) {
       void fetchPatient();
     }
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   if (!patient) return null;
 
