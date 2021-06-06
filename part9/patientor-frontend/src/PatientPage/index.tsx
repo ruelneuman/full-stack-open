@@ -5,8 +5,7 @@ import { Container, Icon } from "semantic-ui-react";
 
 import { Patient, Gender } from "../types";
 import { apiBaseUrl } from "../constants";
-import { useStateValue } from "../state";
-import { addPatient } from "../state/reducer";
+import { useStateValue, addPatient } from "../state";
 
 const PatientPage = () => {
   const [{ patients }, dispatch] = useStateValue();
