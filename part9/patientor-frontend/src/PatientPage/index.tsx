@@ -9,7 +9,7 @@ import { apiBaseUrl } from "../constants";
 import { useStateValue, addPatient } from "../state";
 
 const PatientPage = () => {
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
   dispatch;
 
   const { id } = useParams<{ id: string }>();
@@ -50,11 +50,15 @@ const PatientPage = () => {
           return (
             <div key={entry.id}>
               <div>{entry.date} <em>{entry.description}</em></div>
-              <List bulleted>{entry.diagnosisCodes?.map((code) => {
-                return (
-                  <List.Item key={uuidv1()}>{code}</List.Item>
-                );
-              })}</List>
+              <List bulleted>
+                {entry.diagnosisCodes?.map((code) => {
+                  return (
+                    <List.Item key={uuidv1()}>
+                      {code} {diagnoses[code]?.name}
+                    </List.Item>
+                  );
+                })}
+              </List>
             </div>
           );
         })}
