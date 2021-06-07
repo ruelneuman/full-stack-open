@@ -1,16 +1,15 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { v1 as uuidv1 } from 'uuid';
-import { Container, Icon, List } from "semantic-ui-react";
+import { Container, Icon } from "semantic-ui-react";
 
 import { Patient, Gender } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, addPatient } from "../state";
+import EntryDetails from "./EntryDetails";
 
 const PatientPage = () => {
-  const [{ patients, diagnoses }, dispatch] = useStateValue();
-  dispatch;
+  const [{ patients }, dispatch] = useStateValue();
 
   const { id } = useParams<{ id: string }>();
   const patient = patients[id];
@@ -46,22 +45,9 @@ const PatientPage = () => {
         <div><strong>Date of Birth: </strong>{patient.dateOfBirth || '-'}</div>
         <div><strong>Occupation: </strong>{patient.occupation}</div>
         <h4>Entries</h4>
-        {patient.entries.map((entry) => {
-          return (
-            <div key={entry.id}>
-              <div>{entry.date} <em>{entry.description}</em></div>
-              <List bulleted>
-                {entry.diagnosisCodes?.map((code) => {
-                  return (
-                    <List.Item key={uuidv1()}>
-                      {code} {diagnoses[code]?.name}
-                    </List.Item>
-                  );
-                })}
-              </List>
-            </div>
-          );
-        })}
+        {patient.entries.map((entry) => (
+          <EntryDetails key={entry.id} entry={entry} />
+        ))}
       </Container>
     </div>
   );
