@@ -42,18 +42,18 @@ interface BaseEntry {
 }
 
 interface HospitalEntry extends BaseEntry {
-  type: "Hospital";
+  type: EntryType.Hospital;
   discharge: Discharge;
 }
 
 interface OccupationalHealthcareEntry extends BaseEntry {
-  type: "OccupationHealthcare";
+  type: EntryType.OccupationalHealthCare;
   employerName: string;
   sickLeave?: SickLeave;
 }
 
 interface HealthCheckEntry extends BaseEntry {
-  type: "HealthCheck";
+  type: EntryType.HealthCheck;
   healthCheckRating: HealthCheckRating;
 }
 
