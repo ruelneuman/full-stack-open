@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Icon } from "semantic-ui-react";
+import { Container, Icon, Card, Divider } from "semantic-ui-react";
 
 import { Patient, Gender } from "../types";
 import { apiBaseUrl } from "../constants";
@@ -30,7 +30,7 @@ const PatientPage = () => {
       }
     };
 
-    if (!patient) {
+    if (!patient || !patient.ssn || !patient.entries) {
       void fetchPatient();
     }
   }, [dispatch, id]);
@@ -44,11 +44,13 @@ const PatientPage = () => {
         <div><strong>SSN: </strong>{patient.ssn || '-'}</div>
         <div><strong>Date of Birth: </strong>{patient.dateOfBirth || '-'}</div>
         <div><strong>Occupation: </strong>{patient.occupation}</div>
-        <h4>Entries</h4>
-        {patient.entries.map((entry) => (
+      </Container>
+      <Divider hidden/>
+      <Card.Group>
+        {patient.entries?.map((entry) => (
           <EntryDetails key={entry.id} entry={entry} />
         ))}
-      </Container>
+      </Card.Group>
     </div>
   );
 };
