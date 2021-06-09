@@ -116,8 +116,6 @@ const parseDiagnosisCodes = (diagnosisCodes: any): Array<Diagnosis['code']> => {
   return diagnosisCodes;
 };
 
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const toNewPatient = (object: any): NewPatient => {
 
