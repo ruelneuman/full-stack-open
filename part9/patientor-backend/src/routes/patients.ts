@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
     const addedPatient = patientService.addPatient(newPatient);
     res.json(addedPatient);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send({ error: error.message });
   }
 });
 
@@ -36,12 +36,12 @@ router.post('/:id/entries', (req, res) => {
     const updatedPatient = patientService.addEntry(req.params.id, newEntry);
 
     if (!updatedPatient) {
-      res.status(400).send("invalid patient id");
+      res.status(400).send({ error: "invalid patient id" });
     } else {
       res.json(updatedPatient);
     }
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send({ error: error.message });
   }
 });
 

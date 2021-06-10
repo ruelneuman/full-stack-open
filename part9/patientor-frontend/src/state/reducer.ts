@@ -11,6 +11,10 @@ export type Action =
     payload: Patient;
   }
   | {
+    type: "UPDATE_PATIENT",
+    payload: Patient;
+  }
+  | {
     type: "SET_DIAGNOSIS_LIST";
     payload: Diagnosis[];
   };
@@ -36,6 +40,17 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
+    case "UPDATE_PATIENT":
+      return {
+        ...state,
+        patients: {
+          ...state.patients,
+          [action.payload.id]: {
+            ...state.patients[action.payload.id],
+            ...action.payload
+          }
+        }
+      };
     case "SET_DIAGNOSIS_LIST":
       return {
         ...state,
@@ -58,6 +73,10 @@ export const setPatientList = (patients: Patient[]): Action => {
 
 export const addPatient = (patient: Patient): Action => {
   return { type: "ADD_PATIENT", payload: patient };
+};
+
+export const updatePatient = (patient: Patient): Action => {
+  return { type: "UPDATE_PATIENT", payload: patient };
 };
 
 export const setDiagnosisList = (diagnoses: Diagnosis[]): Action => {
