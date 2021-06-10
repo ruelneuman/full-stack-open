@@ -15,7 +15,7 @@ const EntryDetails = ({ entry }: EntryDetailsProps) => {
   switch (entry.type) {
     case EntryType.Hospital:
       return <HospitalEntry entry={entry} />;
-    case EntryType.OccupationalHealthCare:
+    case EntryType.OccupationalHealthcare:
       return <OccupationalHealthcareEntryDetails entry={entry} />;
     case EntryType.HealthCheck:
       return <HealthCheckEntry entry={entry} />;
