@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
+import * as Yup from 'yup';
 
 import { TextField, SelectField } from "../components/FormField";
 import { Gender, Patient } from "../types";
@@ -22,12 +23,32 @@ const genderOptions: GenderOption[] = [
   { value: Gender.Other, label: "Other" }
 ];
 
+const validationSchema = Yup.object().shape({
+  name: Yup
+    .string()
+    .max(100)
+    .required(),
+  dateOfBirth: Yup
+    .string()
+    .matches(/\d{4}-\d{2}-\d{2}/, "date must be formatted YYYY-MM-DD")
+    .required(),
+  ssn: Yup
+    .number()
+    .typeError("ssn must be a number")
+    .required(),
+  occupation: Yup
+    .string()
+    .min(2)
+    .max(100)
+    .required(),
+});
+
 interface Props {
   onSubmit: (values: PatientFormValues) => void;
   onCancel: () => void;
 }
 
-export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
+export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
   return (
     <Formik
       initialValues={{
@@ -38,25 +59,9 @@ export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
         gender: Gender.Other
       }}
       onSubmit={onSubmit}
-      validate={values => {
-        const requiredError = "Field is required";
-        const errors: { [field: string]: string } = {};
-        if (!values.name) {
-          errors.name = requiredError;
-        }
-        if (!values.ssn) {
-          errors.ssn = requiredError;
-        }
-        if (!values.dateOfBirth) {
-          errors.dateOfBirth = requiredError;
-        }
-        if (!values.occupation) {
-          errors.occupation = requiredError;
-        }
-        return errors;
-      }}
+      validationSchema={validationSchema}
     >
-      {({ isValid, dirty }) => {
+      {({ isValid, dirty, handleChange }) => {
         return (
           <Form className="form ui">
             <Field
@@ -87,6 +92,7 @@ export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
               label="Gender"
               name="gender"
               options={genderOptions}
+              onChange={handleChange}
             />
             <Grid>
               <Grid.Column floated="left" width={5}>

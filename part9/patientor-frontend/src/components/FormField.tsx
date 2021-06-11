@@ -12,16 +12,18 @@ type SelectFieldProps = {
   name: string;
   label: string;
   options: Option[];
+  onChange?: (event: React.SyntheticEvent<HTMLElement, Event>) => void;
 };
 
 export const SelectField = ({
   name,
   label,
-  options
+  options,
+  onChange,
 }: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
-    <Field as="select" name={name} className="ui dropdown">
+    <Field as="select" name={name} className="ui dropdown" onChange={onChange}>
       {options.map(option => (
         <option key={option.value} value={option.value}>
           {option.label || option.value}
@@ -36,7 +38,7 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField= ({
+export const TextField = ({
   field,
   label,
   placeholder
@@ -62,7 +64,7 @@ export const NumberField = ({ field, label, min, max } : NumberProps ) => (
     <label>{label}</label>
     <Field {...field} type='number' min={min} max={max} />
 
-    <div style={{ color:'red' }}>
+    <div style={{ color: 'red' }}>
       <ErrorMessage name={field.name} />
     </div>
   </Form.Field>

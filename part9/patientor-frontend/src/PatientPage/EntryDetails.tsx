@@ -3,9 +3,9 @@ import React from "react";
 import { Entry, EntryType } from "../types";
 import { assertNever } from "../utils";
 
-import HospitalEntry from "./HospitalEntryDetails";
+import HospitalEntryDetails from "./HospitalEntryDetails";
 import OccupationalHealthcareEntryDetails from "./OccupationalHealthcareEntryDetails";
-import HealthCheckEntry from "./HealthCheckEntryDetails";
+import HealthCheckEntryDetails from "./HealthCheckEntryDetails";
 
 interface EntryDetailsProps {
   entry: Entry;
@@ -14,11 +14,11 @@ interface EntryDetailsProps {
 const EntryDetails = ({ entry }: EntryDetailsProps) => {
   switch (entry.type) {
     case EntryType.Hospital:
-      return <HospitalEntry entry={entry} />;
+      return <HospitalEntryDetails entry={entry} />;
     case EntryType.OccupationalHealthcare:
       return <OccupationalHealthcareEntryDetails entry={entry} />;
     case EntryType.HealthCheck:
-      return <HealthCheckEntry entry={entry} />;
+      return <HealthCheckEntryDetails entry={entry} />;
     default:
       return assertNever(entry);
   }
