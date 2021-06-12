@@ -89,6 +89,11 @@ const healthCheckValidationSchema = baseValidationSchema.concat(
     })
 );
 
+type ValidationSchema =
+| typeof healthCheckValidationSchema
+| typeof hospitalValidationSchema
+| typeof OccupationalHealthcareValidationSchema;
+
 interface Props {
   onSubmit: (values: EntryFormValues) => void;
   onCancel: () => void;
@@ -97,7 +102,7 @@ interface Props {
 export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
   const [{ diagnoses }] = useStateValue();
 
-  const [validationSchema, setValidationSchema] = React.useState<typeof healthCheckValidationSchema | typeof hospitalValidationSchema | typeof OccupationalHealthcareValidationSchema>(healthCheckValidationSchema);
+  const [validationSchema, setValidationSchema] = React.useState<ValidationSchema>(healthCheckValidationSchema);
 
   return (
     <Formik
