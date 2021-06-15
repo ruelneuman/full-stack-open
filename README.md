@@ -109,12 +109,27 @@ Projects:
 - [Routed Anecdotes](https://github.com/ruelneuman/full-stack-open/tree/master/part7/routed-anecdotes) - A revisiting of the anecdotes app from part 1 with React Router and custom hooks. Routes were implemented for viewing each anecdote and for the anecdote creation form. Notifications were also implemented. A custom hook was created for handling form fields.
 - [Country Hook](https://github.com/ruelneuman/full-stack-open/tree/master/part7/country-hook) - A revisiting of the country app from part 2 with a custom hook for getting country information from a 3rd party API.
 - [Ultimate Hooks](https://github.com/ruelneuman/full-stack-open/tree/master/part7/ultimate-hooks) - Created a custom hook for communicating with the backend and maintaining the state of retrieved resources
-- [Extended Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-frontend-extended) and [Extended Blog List Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-backend-extended) - Extended the blog list application from parts 4 and 5 to create an improved full stack application for sharing blog posts with friends. Blog posts can be commented on or liked by users authenticated with JSON web tokens. Redux is used for state management and React Router for routing. The backend is a RESTful API made in Express. MongoDB is used along with Mongoose. Improved styling is accompmlished with Material-UI.
+- [Extended Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-frontend-extended) / [Extended Blog List Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-backend-extended) - A full stack application that was extended from the blog app from parts 4 and 5. It is used to share blog post with friends who can then like or comment on them. Redux is used for state management and React Router for routing. Improved styling is accomplished with Material-UI. There is a RESTful backend made with Express. Data is stored using MongoDB. Users are authenticated with JSON web tokens and only authenticated users can comment on or like posts. 
 
 ## Part 8 - [GraphQL](https://fullstackopen.com/en/part8)
 
+Topics:
+- [GraphQL](https://graphql.org/)
+- [Apollo](https://www.apollographql.com/)
+- [DataLoader](https://github.com/graphql/dataloader)
+
+- [Library Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-frontend) / [Library Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-backend) - A full stack app that provides book and author information and allows users to post new books to the database. Uses Apollo Server in the backend to handle GraphQL queries, and uses Apollo Client in the frontend for sending GraphQL queries and to cache results. Uses DataLoader to batch GraphQL queries together, and subscriptions to ensure the frontend stays up to date as the MongoDB database is updated.
+
 ## Part 9 - [TypeScript](https://fullstackopen.com/en/part9)
 
+Topics:
+- [TypeScript](https://www.typescriptlang.org/)
+- [Formik](https://formik.org/docs/overview)
+- [Semantic UI React](https://react.semantic-ui.com/)
+
+- [BMI](https://github.com/ruelneuman/full-stack-open/tree/master/part9/bmi) - A simple Express backend to demonstrate the utility of TypeScript. Provides some simple BMI and exercise calculators.
+- [Course Info Typescript](https://github.com/ruelneuman/full-stack-open/tree/master/part9/courseinfo-typescript) - A simple app to demonstrate the use of TypeScript with React. An extension of the course info app from part 1.
+- [Patientor Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The frontend and backend were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful backend with endpoints for fetching and updating medical records. The provided frontend was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used.
 
 
 
