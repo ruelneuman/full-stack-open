@@ -17,14 +17,23 @@ A summary of the course contents is found below:
 
 ## Part 0 - [Fundamentals of Web Apps](https://fullstackopen.com/en/part0)
 
-Goes over the basics of web development including HTTP requests, JSON, the Document Object Model, and JavaScript libraries.
+Topics:
+- HTML/CSS
+- HTTP requests
+- JSON
+- The Document Object Model (DOM)
+- JavaScript libraries
 
 Projects:
 - [Sequence diagrams](https://github.com/ruelneuman/full-stack-open/tree/master/part0) - Diagrams to illustrate the chain of events during network communication for single page apps and for traditional apps
 
 ## Part 1 - [Introduction to React](https://fullstackopen.com/en/part1)
 
-Introduces React including props, event handlers, and state management.
+Topics:
+- React
+- Props
+- Event handlers
+- State management using hooks
 
 Projects:
 - [Course Info](https://github.com/ruelneuman/full-stack-open/tree/master/part1/courseinfo) - A simple page to display course information.
@@ -33,18 +42,48 @@ Projects:
 
 ## Part 2 - [Communicating with the Server](https://fullstackopen.com/en/part2)
 
-Introduces communication with the backend. Topics include HTTP requests using axios, 3rd party APIs, forms, and rendering collections of data from the server.
+Topics:
+- HTTP requests using [axios](https://github.com/axios/axios)
+- 3rd party APIs
+- Forms
+- Rendering collections of data from the server
 
 Projects:
 - [Course Info 2](https://github.com/ruelneuman/full-stack-open/tree/master/part2/courseinfo2) - A continuation of the project from the part 1 that has been refactored into a more maintainable structure
 - [Countries](https://github.com/ruelneuman/full-stack-open/tree/master/part2/countries) - A page that pulls country and weather data from 3rd party APIs as the user searches for country names.
-- [Phonebook](https://github.com/ruelneuman/full-stack-open/tree/master/part2/phonebook) - A phonebook app that displays and filters phonebook entries. New entries can be added, deleted, or modified. [JSON server](https://github.com/typicode/json-server) is used as a mock REST API.
+- [Phonebook Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part2/phonebook) - A phonebook frontend that displays and filters phonebook entries. New entries can be added, deleted, or modified. [JSON server](https://github.com/typicode/json-server) is used as a mock REST API.
 
 ## Part 3 - [Programming a Server with Node.js and Express](https://fullstackopen.com/en/part3)
 
+Topics:
+- REST APIs using [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/) with [Mongoose]
+- Express middleware for logging, error handling, etc.
+- [ESlint](https://eslint.org/)
+
+Projects:
+- [Phonebook Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part3/phonebook-backend) - An RESTful backend in Express for the phonebook frontend from the previous part. Uses Mongoose and a MongoDB database.
+
 ## Part 4 - [Testing Express Servers, User Administration](https://fullstackopen.com/en/part4)
 
+Topics:
+- Unit testing and integration testing [Express](https://expressjs.com/) backends with [Jest](https://jestjs.io/) and [SuperTest](https://github.com/visionmedia/supertest)
+- User authentication using using [JSON web tokens](https://jwt.io/)
+- Password hashing using [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+
+Projects:
+- [Blog List Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part4/blog-list-backend) - A RESTful backend in Express for adding, editing or fetching blog post data. Certain endpoints are limited to authenticated users only. Unit and integration tests were done using Jest and SuperTest.
+
 ## Part 5 - [Testing React Apps](https://fullstackopen.com/en/part5)
+
+Topics:
+- Unit testing of React components using [Jest](https://jestjs.io/) and [React Testing Library](https://github.com/testing-library/react-testing-library)
+- End-to-end testing of full stack applications using [Cypress](https://www.cypress.io/)
+- Handling login on the frontend using [JSON web tokens](https://jwt.io/)
+- Defining props using [prop-types](https://github.com/facebook/prop-types)
+
+Projects:
+- [Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part5/bloglist-frontend) - A React frontend for the blog list backend from the previous part. Users can add or like their favourite blog posts. Unit testing of React components was done using Jest and React Testing Library. End-to-End testing of the full stack application was done using Cypress.
 
 ## Part 6 - [State Management with Redux](https://fullstackopen.com/en/part6)
 
