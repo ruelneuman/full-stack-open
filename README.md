@@ -80,12 +80,20 @@ Topics:
 - Unit testing of React components using [Jest](https://jestjs.io/) and [React Testing Library](https://github.com/testing-library/react-testing-library)
 - End-to-end testing of full stack applications using [Cypress](https://www.cypress.io/)
 - Handling login on the frontend using [JSON web tokens](https://jwt.io/)
-- Defining props using [prop-types](https://github.com/facebook/prop-types)
+- Defining props using [PropTypes](https://github.com/facebook/prop-types)
 
 Projects:
 - [Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part5/bloglist-frontend) - A React frontend for the blog list backend from the previous part. Users can add or like their favourite blog posts. Unit testing of React components was done using Jest and React Testing Library. End-to-End testing of the full stack application was done using Cypress.
 
 ## Part 6 - [State Management with Redux](https://fullstackopen.com/en/part6)
+
+Topics:
+- [Redux](https://redux.js.org/) for state management (using both hooks and connect)
+- [Redux Thunk](https://github.com/reduxjs/redux-thunk) middleware for asynchronous actions
+
+Projects:
+- [Unicafe Redux](https://github.com/ruelneuman/full-stack-open/tree/master/part6/unicafe-redux) - A revisiting of the unicafe app from part 1 with Redux for state management. Tests for the reducer were implemented using Jest.
+- [Redux Anecdotes](https://github.com/ruelneuman/full-stack-open/tree/master/part6/redux-anecdotes) - A revisiting of the anecdotes app from part 1 with Redux for state management. Uses reducers for notifications, filtering data, and initializing/adding/voting for anecodtes. Uses Redux Thunk middleware for for asynchronous actions.
 
 ## Part 7 - [React Router, Custom Hooks, Styling Apps with CSS and webpack](https://fullstackopen.com/en/part7)
 
