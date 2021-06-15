@@ -130,7 +130,7 @@ Topics:
 
 Projects:
 - [BMI](https://github.com/ruelneuman/full-stack-open/tree/master/part9/bmi) - A simple Express backend to demonstrate the utility of TypeScript. Provides some simple BMI and exercise calculators.
-- [Course Info Typescript](https://github.com/ruelneuman/full-stack-open/tree/master/part9/courseinfo-typescript) - A simple app to demonstrate the use of TypeScript with React. An extension of the course info app from part 1.
+- [Course Info Typescript](https://github.com/ruelneuman/full-stack-open/tree/master/part9/courseinfo-typescript) - A simple app to demonstrate the use of TypeScript with React. It is an extension of the course info app from part 1.
 - [Patientor Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The frontend and backend were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful backend with endpoints for fetching and updating medical records. The provided frontend was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used.
 
 
