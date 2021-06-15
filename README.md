@@ -51,7 +51,7 @@ Topics:
 Projects:
 - [Course Info 2](https://github.com/ruelneuman/full-stack-open/tree/master/part2/courseinfo2) - A continuation of the project from the part 1 that has been refactored into a more maintainable structure
 - [Countries](https://github.com/ruelneuman/full-stack-open/tree/master/part2/countries) - A page that pulls country and weather data from 3rd party APIs as the user searches for country names.
-- [Phonebook Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part2/phonebook) - A phonebook frontend that displays and filters phonebook entries. New entries can be added, deleted, or modified. [JSON server](https://github.com/typicode/json-server) is used as a mock REST API.
+- [Phonebook Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part2/phonebook) - A phonebook front end that displays and filters phonebook entries. New entries can be added, deleted, or modified. [JSON server](https://github.com/typicode/json-server) is used as a mock REST API.
 
 ## Part 3 - [Programming a Server with Node.js and Express](https://fullstackopen.com/en/part3)
 
@@ -62,28 +62,28 @@ Topics:
 - [ESlint](https://eslint.org/)
 
 Projects:
-- [Phonebook Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part3/phonebook-backend) - An RESTful backend in Express for the phonebook frontend from the previous part. Uses Mongoose and a MongoDB database.
+- [Phonebook Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part3/phonebook-backend) - An RESTful back end in Express for the phonebook front end from the previous part. Uses Mongoose and a MongoDB database.
 
 ## Part 4 - [Testing Express Servers, User Administration](https://fullstackopen.com/en/part4)
 
 Topics:
-- Unit testing and integration testing [Express](https://expressjs.com/) backends with [Jest](https://jestjs.io/) and [SuperTest](https://github.com/visionmedia/supertest)
+- Unit testing and integration testing [Express](https://expressjs.com/) back ends with [Jest](https://jestjs.io/) and [SuperTest](https://github.com/visionmedia/supertest)
 - User authentication using using [JSON web tokens](https://jwt.io/)
 - Password hashing using [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 
 Projects:
-- [Blog List Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part4/blog-list-backend) - A RESTful backend in Express for adding, editing or fetching blog post data. Certain endpoints are limited to authenticated users only. Unit and integration tests were done using Jest and SuperTest.
+- [Blog List Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part4/blog-list-backend) - A RESTful back end in Express for adding, editing or fetching blog post data. Certain endpoints are limited to authenticated users only. Unit and integration tests were done using Jest and SuperTest.
 
 ## Part 5 - [Testing React Apps](https://fullstackopen.com/en/part5)
 
 Topics:
 - Unit testing of React components using [Jest](https://jestjs.io/) and [React Testing Library](https://github.com/testing-library/react-testing-library)
 - End-to-end testing of full stack applications using [Cypress](https://www.cypress.io/)
-- Handling login on the frontend using [JSON web tokens](https://jwt.io/)
+- Handling login on the front end using [JSON web tokens](https://jwt.io/)
 - Defining props using [PropTypes](https://github.com/facebook/prop-types)
 
 Projects:
-- [Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part5/bloglist-frontend) - A React frontend for the blog list backend from the previous part. Users can add or like their favourite blog posts. Unit testing of React components was done using Jest and React Testing Library. End-to-End testing of the full stack application was done using Cypress.
+- [Blog List Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part5/bloglist-frontend) - A React front end for the blog list back end from the previous part. Users can add or like their favourite blog posts. Unit testing of React components was done using Jest and React Testing Library. End-to-End testing of the full stack application was done using Cypress.
 
 ## Part 6 - [State Management with Redux](https://fullstackopen.com/en/part6)
 
@@ -108,8 +108,8 @@ Topics:
 Projects:
 - [Routed Anecdotes](https://github.com/ruelneuman/full-stack-open/tree/master/part7/routed-anecdotes) - A revisiting of the anecdotes app from part 1 with React Router and custom hooks. Routes were implemented for viewing each anecdote and for the anecdote creation form. Notifications were also implemented. A custom hook was created for handling form fields.
 - [Country Hook](https://github.com/ruelneuman/full-stack-open/tree/master/part7/country-hook) - A revisiting of the country app from part 2 with a custom hook for getting country information from a 3rd party API.
-- [Ultimate Hooks](https://github.com/ruelneuman/full-stack-open/tree/master/part7/ultimate-hooks) - Created a custom hook for communicating with the backend and maintaining the state of retrieved resources
-- [Extended Blog List Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-frontend-extended) / [Extended Blog List Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-backend-extended) - A full stack application that was extended from the blog app from parts 4 and 5. It is used to share blog post with friends who can then like or comment on them. Redux is used for state management and React Router for routing. Improved styling is accomplished with Material-UI. There is a RESTful backend made with Express. Data is stored using MongoDB. Users are authenticated with JSON web tokens and only authenticated users can comment on or like posts. 
+- [Ultimate Hooks](https://github.com/ruelneuman/full-stack-open/tree/master/part7/ultimate-hooks) - Created a custom hook for communicating with the back end and maintaining the state of retrieved resources
+- [Extended Blog List Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-frontend-extended) / [Extended Blog List Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part7/blog-list-backend-extended) - A full stack application that was extended from the blog app from parts 4 and 5. It is used to share blog post with friends who can then like or comment on them. Redux is used for state management and React Router for routing. Improved styling is accomplished with Material-UI. There is a RESTful back end made with Express. Data is stored using MongoDB. Users are authenticated with JSON web tokens and only authenticated users can comment on or like posts. 
 
 ## Part 8 - [GraphQL](https://fullstackopen.com/en/part8)
 
@@ -119,7 +119,7 @@ Topics:
 - [DataLoader](https://github.com/graphql/dataloader)
 
 Projects:
-- [Library Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-frontend) / [Library Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-backend) - A full stack app that provides book and author information and allows users to post new books to the database. Uses Apollo Server in the backend to handle GraphQL queries, and uses Apollo Client in the frontend for sending GraphQL queries and to cache results. Uses DataLoader to batch GraphQL queries together, and subscriptions to ensure the frontend stays up to date as the MongoDB database is updated.
+- [Library Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-frontend) / [Library Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part8/library-backend) - A full stack app that provides book and author information and allows users to post new books to the database. Uses Apollo Server in the back end to handle GraphQL queries, and uses Apollo Client in the front end for sending GraphQL queries and to cache results. Uses DataLoader to batch GraphQL queries together, and subscriptions to ensure the front end stays up to date as the MongoDB database is updated.
 
 ## Part 9 - [TypeScript](https://fullstackopen.com/en/part9)
 
@@ -129,9 +129,9 @@ Topics:
 - [Semantic UI React](https://react.semantic-ui.com/)
 
 Projects:
-- [BMI](https://github.com/ruelneuman/full-stack-open/tree/master/part9/bmi) - A simple Express backend to demonstrate the utility of TypeScript. Provides some simple BMI and exercise calculators.
+- [BMI](https://github.com/ruelneuman/full-stack-open/tree/master/part9/bmi) - A simple Express back end to demonstrate the utility of TypeScript. Provides some simple BMI and exercise calculators.
 - [Course Info Typescript](https://github.com/ruelneuman/full-stack-open/tree/master/part9/courseinfo-typescript) - A simple app to demonstrate the use of TypeScript with React. It is an extension of the course info app from part 1.
-- [Patientor Frontend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Backend](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The frontend and backend were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful backend with endpoints for fetching and updating medical records. The provided frontend was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used.
+- [Patientor Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The front end and back end were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful back end with endpoints for fetching and updating medical records. The provided front end was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used.
 
 
 
