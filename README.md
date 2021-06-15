@@ -57,7 +57,7 @@ Projects:
 
 Topics:
 - REST APIs using [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/)
-- [MongoDB](https://www.mongodb.com/) with [Mongoose]
+- [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/)
 - Express middleware for logging, error handling, etc.
 - [ESlint](https://eslint.org/)
 
@@ -96,6 +96,14 @@ Projects:
 - [Redux Anecdotes](https://github.com/ruelneuman/full-stack-open/tree/master/part6/redux-anecdotes) - A revisiting of the anecdotes app from part 1 with Redux for state management. Uses reducers for notifications, filtering data, and initializing/adding/voting for anecodtes. Uses Redux Thunk middleware for for asynchronous actions.
 
 ## Part 7 - [React Router, Custom Hooks, Styling Apps with CSS and webpack](https://fullstackopen.com/en/part7)
+
+Topics:
+- [React Router](https://reactrouter.com/)
+- Custom React hooks
+- React class components
+- UI libraries including [React-Bootstrap](https://react-bootstrap.github.io/) and [Material-UI](https://material-ui.com/)
+- [styled-components](https://styled-components.com/)
+- [webpack](https://webpack.js.org/)
 
 ## Part 8 - [GraphQL](https://fullstackopen.com/en/part8)
 
