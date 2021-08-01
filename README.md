@@ -11,6 +11,7 @@ The course covers many important topics of full stack web development such as:
 - MongoDB
 - TypeScript
 - React Native
+- Unit testing, integration testing, and end-to-end testing
 
 The course was estimated to take about 20 hours per part to complete. However, to maximize my learning potential I generally spent anywhere from 25 to 40 hours per part. I found this extra time to be very beneficial. I was able to review my code and refator it for better readablity and ease of maintenance.
 
