@@ -10,6 +10,7 @@ The course covers many important topics of full stack web development such as:
 - GraphQL
 - MongoDB
 - TypeScript
+- React Native
 
 The course was estimated to take about 20 hours per part to complete. However, to maximize my learning potential I generally spent anywhere from 25 to 40 hours per part. I found this extra time to be very beneficial. I was able to review my code and refator it for better readablity and ease of maintenance.
 
@@ -141,7 +142,7 @@ Topics:
 - [Expo](https://expo.dev/)
 
 Projects:
-- [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewd. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for sign in, sign up, and repository rating forms. See the link for screenshots of the app.
+- [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewed. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for forms and form data validation. See the link for screenshots of the app.
 
 
 
