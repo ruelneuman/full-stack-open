@@ -1,5 +1,5 @@
 # Full Stack Open 2021
-This repository contains my projects and solutions for the [Full Stack Open 2021](https://fullstackopen.com/en/) course from the University of Helsinki. Parts 0 to 9 are contained within this repository, and part 10 is contained in a [separate repository](https://github.com/ruelneuman/full-stack-open-part10).
+This repository contains my projects and solutions for the [Full Stack Open 2021](https://fullstackopen.com/en/) course from the University of Helsinki. Parts 0 to 9 are contained within this repository. Parts 10 and 11 are contained in separate repositories (links are in the associated sections below).
 
 The course covers many important topics of full stack web development such as:
 - React
@@ -12,6 +12,7 @@ The course covers many important topics of full stack web development such as:
 - TypeScript
 - React Native
 - Unit testing, integration testing, and end-to-end testing
+- CI/CD
 
 The course was estimated to take about 20 hours per part to complete. However, to maximize my learning potential I generally spent anywhere from 25 to 40 hours per part. I found this extra time to be very beneficial. I was able to review my code and refator it for better readablity and ease of maintenance.
 
@@ -145,5 +146,11 @@ Topics:
 Projects:
 - [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewed. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for forms and form data validation. See the link for screenshots of the app.
 
+## Part 10 - [CI/CD](https://fullstackopen.com/en/part11)
 
+Topics:
+- CI/CD using [GitHub Actions](https://docs.github.com/en/actions)
 
+Projects:
+- [CI/CD pipeline for a Pokedex App](https://github.com/ruelneuman/full-stack-open-pokedex) - Created a CI/CD pipeline using GitHub actions for a pre-built Pokedex app. The pipeline includes linting, building, unit tests, end-to-end tests, deployment to Heroku, version tagging, and Slack notifications.
+- [CI/CD pipeline for the Redux Anecdotes App](https://github.com/ruelneuman/full-stack-open-part11-pipeline/tree/main/src) - Created a CI/CD pipeline using GitHub actions for a the Redux Anecdotes app from part 6. The pipeline includes linting, building, unit tests, end-to-end tests, deployment to Heroku, and version tagging.
