@@ -146,7 +146,7 @@ Topics:
 Projects:
 - [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewed. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for forms and form data validation. See the link for screenshots of the app.
 
-## Part 10 - [CI/CD](https://fullstackopen.com/en/part11)
+## Part 11 - [CI/CD](https://fullstackopen.com/en/part11)
 
 Topics:
 - CI/CD using [GitHub Actions](https://docs.github.com/en/actions)
