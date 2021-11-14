@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Screenshots
+<p float="left">
+  <img src="/part9/patientor-frontend/screenshots/PatientList.png" width="100%">
+  <img src="/part9/patientor-frontend/screenshots/NewPatientForm.png" width="100%">
+  <img src="/part9/patientor-frontend/screenshots/PatientEntries.png" width="100%">
+  <img src="/part9/patientor-frontend/screenshots/EntryForm.png" width="100%">
+</p>
+
 ## Available Scripts
 
 In the project directory, you can run:
