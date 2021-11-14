@@ -135,7 +135,7 @@ Topics:
 Projects:
 - [BMI](https://github.com/ruelneuman/full-stack-open/tree/master/part9/bmi) - A simple Express back end to demonstrate the utility of TypeScript. Provides some simple BMI and exercise calculators.
 - [Course Info Typescript](https://github.com/ruelneuman/full-stack-open/tree/master/part9/courseinfo-typescript) - A simple app to demonstrate the use of TypeScript with React. It is an extension of the course info app from part 1.
-- [Patientor Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The front end and back end were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful back end with endpoints for fetching and updating medical records. The provided front end was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used. [Screenshots of app](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend/screenshots).
+- [Patientor Front End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend) / [Patientor Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-backend) - A medical record app that provides and updates patient details and medical records. The front end and back end were coded using TypeScript to ensure proper handling of widely varying data types for the medical records. There is a RESTful back end with endpoints for fetching and updating medical records. The provided front end was expanded to add pages for displaying patient details and medical records. Formik and Yup were used to create a maintainable form for adding medical records. Semantic UI React was also used. [Screenshots](https://github.com/ruelneuman/full-stack-open/tree/master/part9/patientor-frontend).
 
 ### Part 10 - [React Native](https://fullstackopen.com/en/part10)
 
@@ -144,7 +144,7 @@ Topics:
 - [Expo](https://expo.dev/)
 
 Projects:
-- [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewed. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for forms and form data validation. See the link for screenshots of the app.
+- [Rate Repository App](https://github.com/ruelneuman/full-stack-open-part10) - A React Native frontend for a pre-made GraphQL back end. The app displays a list of GitHub repositories that users have rated and reviewed. The list can be filtered and sorted, and it can be infinitely scrolled. Signed-in users can create reviews for any public GitHub repository. They can see a list of all repositories they've reviewed and delete any of their reviews. The app utilized Formik and Yup for forms and form data validation. [Screenshots](https://github.com/ruelneuman/full-stack-open-part10)
 
 ### Part 11 - [CI/CD](https://fullstackopen.com/en/part11)
 
