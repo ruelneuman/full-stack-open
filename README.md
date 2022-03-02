@@ -9,6 +9,7 @@ The course covers many important topics of full stack web development such as:
 - REST APIs
 - GraphQL
 - MongoDB
+- Relational Databases
 - TypeScript
 - React Native
 - Unit testing, integration testing, and end-to-end testing
@@ -71,11 +72,12 @@ Projects:
 
 Topics:
 - Unit testing and integration testing [Express](https://expressjs.com/) back ends with [Jest](https://jestjs.io/) and [SuperTest](https://github.com/visionmedia/supertest)
-- User authentication using using [JSON web tokens](https://jwt.io/)
+- User 
+entication using using [JSON web tokens](https://jwt.io/)
 - Password hashing using [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 
 Projects:
-- [Blog List Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part4/blog-list-backend) - A RESTful back end in Express for adding, editing or fetching blog post data. Certain endpoints are limited to authenticated users only. Unit and integration tests were done using Jest and SuperTest.
+- [Blog List Back End](https://github.com/ruelneuman/full-stack-open/tree/master/part4/blog-list-backend) - A RESTful back end in Express for creating, reading, and updating blog post data. Certain endpoints are limited to authenticated users only. Unit and integration tests were done using Jest and SuperTest.
 
 ### Part 5 - [Testing React Apps](https://fullstackopen.com/en/part5)
 
@@ -154,3 +156,17 @@ Topics:
 Projects:
 - [CI/CD pipeline for a Pokedex App](https://github.com/ruelneuman/full-stack-open-pokedex) - Created a CI/CD pipeline using GitHub actions for a pre-built Pokedex app. The pipeline includes linting, building, unit tests, end-to-end tests, deployment to Heroku, version tagging, and Slack notifications.
 - [CI/CD pipeline for the Redux Anecdotes App](https://github.com/ruelneuman/full-stack-open-part11-pipeline/tree/main/src) - Created a CI/CD pipeline using GitHub actions for a the Redux Anecdotes app from part 6. The pipeline includes linting, building, unit tests, end-to-end tests, deployment to Heroku, and version tagging.
+
+### Part 12 - [Containers](https://fullstackopen.com/en/part12)
+
+To be completed.
+
+### Part 13 - [Using Relational Databases](https://fullstackopen.com/en/part13)
+
+Topics:
+- [Sequelize](https://github.com/sequelize/sequelize) ORM
+- [PostgreSQL](https://www.postgresql.org/)
+- Database migrations
+
+Projects:
+- [Blog List Back End (SQL)](https://github.com/ruelneuman/full-stack-open-part13) - A recreation and extension of the RESTful back end in Express from Part 4 using PostgreSQL instead of MongoDB. The application is used for creating, reading, updating or deleting blog post and author data. Users can also create reading lists and mark blogs posts as read. User authentication is accomplished using JSON web tokens. Tokens can also be blacklisted to prevent further use and users can be disabled entirely. Complex data are returned using table joins, query strings to specify data subsets, and aggregate SQL functions to provide data summaries. Sequelize migrations are used to make database changes and to keep a log of those changes.
