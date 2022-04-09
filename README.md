@@ -1,7 +1,7 @@
 # Full Stack Open 2021
 This repository contains my projects and solutions for the [Full Stack Open](https://fullstackopen.com/en/) course from the University of Helsinki. Parts 0 to 9 are contained within this repository. Parts 10 to 13 are contained in separate repositories (links are in the associated sections below).
 
-The course covers many important topics of full stack web development such as:
+The course covers many topics of full stack web development such as:
 - React
 - Redux
 - Node.js
