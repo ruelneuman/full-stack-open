@@ -159,7 +159,8 @@ Projects:
 
 ### Part 12 - [Containers](https://fullstackopen.com/en/part12)
 
-To be completed.
+Topics:
+- Using [Docker](https://www.docker.com/)
 
 ### Part 13 - [Using Relational Databases](https://fullstackopen.com/en/part13)
 
